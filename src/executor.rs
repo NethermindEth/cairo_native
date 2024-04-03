@@ -39,7 +39,8 @@ extern "C" {
     ///
     /// The `ret_ptr` argument is only used when the first argument (the actual return pointer) is
     /// unused. Used for u8, u16, u32, u64, u128 and felt252, but not for arrays, enums or structs.
-    fn aot_trampoline(
+    #[cfg_attr(not(target_os = "macos"), link_name = "_invoke_trampoline")]
+    fn invoke_trampoline(
         fn_ptr: *const c_void,
         args_ptr: *const u64,
         args_len: usize,
@@ -199,7 +200,7 @@ fn invoke_dynamic(
     let mut ret_registers = [0; 4];
 
     unsafe {
-        aot_trampoline(
+        invoke_trampoline(
             function_ptr,
             invoke_data.invoke_data().as_ptr(),
             invoke_data.invoke_data().len(),
