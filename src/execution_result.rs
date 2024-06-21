@@ -3,6 +3,7 @@
 /// This module contains the structures used to interpret the program execution results, either
 /// normal programs or starknet contracts.
 use crate::{error::Error, values::JitValue};
+use itertools::Itertools;
 use starknet_types_core::felt::Felt;
 
 #[derive(Debug, Default, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
@@ -99,11 +100,25 @@ impl ContractExecutionResult {
 
                         let bytes_err: Vec<_> = felt_vec
                             .iter()
-                            .flat_map(|felt| felt.to_bytes_be().to_vec())
-                            // remove null chars
-                            .filter(|b| *b != 0)
+                            .flat_map(|felt| felt.to_bytes_be()[1..32].to_vec())
                             .collect();
-                        let str_error = String::from_utf8(bytes_err).unwrap().to_owned();
+
+                        let str_error = match String::from_utf8(bytes_err) {
+                            Ok(s) => s.trim_matches('\0').to_owned(),
+                            Err(_) => {
+                                let err_msgs = felt_vec
+                                    .iter()
+                                    .map(|felt| {
+                                        match String::from_utf8(felt.to_bytes_be()[1..32].to_vec())
+                                        {
+                                            Ok(s) => format!("{} ({})", s.trim_matches('\0'), felt),
+                                            Err(_) => felt.to_string(),
+                                        }
+                                    })
+                                    .join(", ");
+                                format!("[{}]", err_msgs)
+                            }
+                        };
 
                         error_msg = Some(str_error);
                         felt_vec
