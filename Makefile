@@ -40,7 +40,7 @@ usage:
 	@echo "    clean:        Cleans the built artifacts."
 
 build: check-llvm runtime
-	cargo build --release --all-features
+	cargo build --release --all-features --jobs 1
 
 build-native: check-llvm runtime
 	RUSTFLAGS="-C target-cpu=native" cargo build --release --all-features
