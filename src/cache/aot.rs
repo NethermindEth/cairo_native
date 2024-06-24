@@ -4,6 +4,7 @@ use crate::{
 };
 use cairo_lang_sierra::program::Program;
 use libloading::Library;
+use melior::ir::operation::OperationPrintingFlags;
 use std::{
     collections::HashMap,
     fmt::{self, Debug},
@@ -45,6 +46,10 @@ where
             registry,
             metadata,
         } = self.context.compile(program, None).expect("should compile");
+
+        let output_str = module.as_operation()
+            .to_string_with_flags(OperationPrintingFlags::new().enable_debug_info(true, false)).unwrap();
+        println!("{output_str}");
 
         // Compile module into an object.
         let object_data = crate::ffi::module_to_object(&module, opt_level).unwrap();
