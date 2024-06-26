@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"struct":["BlockInfo","ExecutionInfo","ExecutionInfoV2","Felt252Abi","ResourceBounds","Secp256k1Point","Secp256r1Point","TxInfo","TxV2Info","U256"],"trait":["StarkNetSyscallHandler"],"type":["SyscallResult"]};
+window.SIDEBAR_ITEMS = {"constant":["SYSCALL_HANDLER_VTABLE"],"fn":["cairo_native__vtable_cheatcode"],"struct":["ArrayAbi","BlockInfo","DummySyscallHandler","ExecutionInfo","ExecutionInfoV2","Felt252Abi","ResourceBounds","Secp256k1Point","Secp256r1Point","TxInfo","TxV2Info","U256"],"trait":["StarknetSyscallHandler"],"type":["SyscallResult"]};

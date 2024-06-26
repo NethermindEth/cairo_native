@@ -1,5 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/starknet.rs`."><title>starknet.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="cairo_native" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
-    <main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/starknet.rs`."><title>starknet.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-081576b923113409.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="cairo_native" data-themes="" data-resource-suffix="" data-rustdoc-version="1.79.0 (129f3b996 2024-06-10)" data-channel="1.79.0" data-search-js="search-bf21c90c8c1d92b1.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-e32f0c247825364d.js"></script><script defer src="../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-20a3ad099b048cf2.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-09095024cf37855e.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../cairo_native/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Type ‘S’ or ‘/’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings">Settings</a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -1381,26 +1380,324 @@
 <a href="#1380" id="1380">1380</a>
 <a href="#1381" id="1381">1381</a>
 <a href="#1382" id="1382">1382</a>
+<a href="#1383" id="1383">1383</a>
+<a href="#1384" id="1384">1384</a>
+<a href="#1385" id="1385">1385</a>
+<a href="#1386" id="1386">1386</a>
+<a href="#1387" id="1387">1387</a>
+<a href="#1388" id="1388">1388</a>
+<a href="#1389" id="1389">1389</a>
+<a href="#1390" id="1390">1390</a>
+<a href="#1391" id="1391">1391</a>
+<a href="#1392" id="1392">1392</a>
+<a href="#1393" id="1393">1393</a>
+<a href="#1394" id="1394">1394</a>
+<a href="#1395" id="1395">1395</a>
+<a href="#1396" id="1396">1396</a>
+<a href="#1397" id="1397">1397</a>
+<a href="#1398" id="1398">1398</a>
+<a href="#1399" id="1399">1399</a>
+<a href="#1400" id="1400">1400</a>
+<a href="#1401" id="1401">1401</a>
+<a href="#1402" id="1402">1402</a>
+<a href="#1403" id="1403">1403</a>
+<a href="#1404" id="1404">1404</a>
+<a href="#1405" id="1405">1405</a>
+<a href="#1406" id="1406">1406</a>
+<a href="#1407" id="1407">1407</a>
+<a href="#1408" id="1408">1408</a>
+<a href="#1409" id="1409">1409</a>
+<a href="#1410" id="1410">1410</a>
+<a href="#1411" id="1411">1411</a>
+<a href="#1412" id="1412">1412</a>
+<a href="#1413" id="1413">1413</a>
+<a href="#1414" id="1414">1414</a>
+<a href="#1415" id="1415">1415</a>
+<a href="#1416" id="1416">1416</a>
+<a href="#1417" id="1417">1417</a>
+<a href="#1418" id="1418">1418</a>
+<a href="#1419" id="1419">1419</a>
+<a href="#1420" id="1420">1420</a>
+<a href="#1421" id="1421">1421</a>
+<a href="#1422" id="1422">1422</a>
+<a href="#1423" id="1423">1423</a>
+<a href="#1424" id="1424">1424</a>
+<a href="#1425" id="1425">1425</a>
+<a href="#1426" id="1426">1426</a>
+<a href="#1427" id="1427">1427</a>
+<a href="#1428" id="1428">1428</a>
+<a href="#1429" id="1429">1429</a>
+<a href="#1430" id="1430">1430</a>
+<a href="#1431" id="1431">1431</a>
+<a href="#1432" id="1432">1432</a>
+<a href="#1433" id="1433">1433</a>
+<a href="#1434" id="1434">1434</a>
+<a href="#1435" id="1435">1435</a>
+<a href="#1436" id="1436">1436</a>
+<a href="#1437" id="1437">1437</a>
+<a href="#1438" id="1438">1438</a>
+<a href="#1439" id="1439">1439</a>
+<a href="#1440" id="1440">1440</a>
+<a href="#1441" id="1441">1441</a>
+<a href="#1442" id="1442">1442</a>
+<a href="#1443" id="1443">1443</a>
+<a href="#1444" id="1444">1444</a>
+<a href="#1445" id="1445">1445</a>
+<a href="#1446" id="1446">1446</a>
+<a href="#1447" id="1447">1447</a>
+<a href="#1448" id="1448">1448</a>
+<a href="#1449" id="1449">1449</a>
+<a href="#1450" id="1450">1450</a>
+<a href="#1451" id="1451">1451</a>
+<a href="#1452" id="1452">1452</a>
+<a href="#1453" id="1453">1453</a>
+<a href="#1454" id="1454">1454</a>
+<a href="#1455" id="1455">1455</a>
+<a href="#1456" id="1456">1456</a>
+<a href="#1457" id="1457">1457</a>
+<a href="#1458" id="1458">1458</a>
+<a href="#1459" id="1459">1459</a>
+<a href="#1460" id="1460">1460</a>
+<a href="#1461" id="1461">1461</a>
+<a href="#1462" id="1462">1462</a>
+<a href="#1463" id="1463">1463</a>
+<a href="#1464" id="1464">1464</a>
+<a href="#1465" id="1465">1465</a>
+<a href="#1466" id="1466">1466</a>
+<a href="#1467" id="1467">1467</a>
+<a href="#1468" id="1468">1468</a>
+<a href="#1469" id="1469">1469</a>
+<a href="#1470" id="1470">1470</a>
+<a href="#1471" id="1471">1471</a>
+<a href="#1472" id="1472">1472</a>
+<a href="#1473" id="1473">1473</a>
+<a href="#1474" id="1474">1474</a>
+<a href="#1475" id="1475">1475</a>
+<a href="#1476" id="1476">1476</a>
+<a href="#1477" id="1477">1477</a>
+<a href="#1478" id="1478">1478</a>
+<a href="#1479" id="1479">1479</a>
+<a href="#1480" id="1480">1480</a>
+<a href="#1481" id="1481">1481</a>
+<a href="#1482" id="1482">1482</a>
+<a href="#1483" id="1483">1483</a>
+<a href="#1484" id="1484">1484</a>
+<a href="#1485" id="1485">1485</a>
+<a href="#1486" id="1486">1486</a>
+<a href="#1487" id="1487">1487</a>
+<a href="#1488" id="1488">1488</a>
+<a href="#1489" id="1489">1489</a>
+<a href="#1490" id="1490">1490</a>
+<a href="#1491" id="1491">1491</a>
+<a href="#1492" id="1492">1492</a>
+<a href="#1493" id="1493">1493</a>
+<a href="#1494" id="1494">1494</a>
+<a href="#1495" id="1495">1495</a>
+<a href="#1496" id="1496">1496</a>
+<a href="#1497" id="1497">1497</a>
+<a href="#1498" id="1498">1498</a>
+<a href="#1499" id="1499">1499</a>
+<a href="#1500" id="1500">1500</a>
+<a href="#1501" id="1501">1501</a>
+<a href="#1502" id="1502">1502</a>
+<a href="#1503" id="1503">1503</a>
+<a href="#1504" id="1504">1504</a>
+<a href="#1505" id="1505">1505</a>
+<a href="#1506" id="1506">1506</a>
+<a href="#1507" id="1507">1507</a>
+<a href="#1508" id="1508">1508</a>
+<a href="#1509" id="1509">1509</a>
+<a href="#1510" id="1510">1510</a>
+<a href="#1511" id="1511">1511</a>
+<a href="#1512" id="1512">1512</a>
+<a href="#1513" id="1513">1513</a>
+<a href="#1514" id="1514">1514</a>
+<a href="#1515" id="1515">1515</a>
+<a href="#1516" id="1516">1516</a>
+<a href="#1517" id="1517">1517</a>
+<a href="#1518" id="1518">1518</a>
+<a href="#1519" id="1519">1519</a>
+<a href="#1520" id="1520">1520</a>
+<a href="#1521" id="1521">1521</a>
+<a href="#1522" id="1522">1522</a>
+<a href="#1523" id="1523">1523</a>
+<a href="#1524" id="1524">1524</a>
+<a href="#1525" id="1525">1525</a>
+<a href="#1526" id="1526">1526</a>
+<a href="#1527" id="1527">1527</a>
+<a href="#1528" id="1528">1528</a>
+<a href="#1529" id="1529">1529</a>
+<a href="#1530" id="1530">1530</a>
+<a href="#1531" id="1531">1531</a>
+<a href="#1532" id="1532">1532</a>
+<a href="#1533" id="1533">1533</a>
+<a href="#1534" id="1534">1534</a>
+<a href="#1535" id="1535">1535</a>
+<a href="#1536" id="1536">1536</a>
+<a href="#1537" id="1537">1537</a>
+<a href="#1538" id="1538">1538</a>
+<a href="#1539" id="1539">1539</a>
+<a href="#1540" id="1540">1540</a>
+<a href="#1541" id="1541">1541</a>
+<a href="#1542" id="1542">1542</a>
+<a href="#1543" id="1543">1543</a>
+<a href="#1544" id="1544">1544</a>
+<a href="#1545" id="1545">1545</a>
+<a href="#1546" id="1546">1546</a>
+<a href="#1547" id="1547">1547</a>
+<a href="#1548" id="1548">1548</a>
+<a href="#1549" id="1549">1549</a>
+<a href="#1550" id="1550">1550</a>
+<a href="#1551" id="1551">1551</a>
+<a href="#1552" id="1552">1552</a>
+<a href="#1553" id="1553">1553</a>
+<a href="#1554" id="1554">1554</a>
+<a href="#1555" id="1555">1555</a>
+<a href="#1556" id="1556">1556</a>
+<a href="#1557" id="1557">1557</a>
+<a href="#1558" id="1558">1558</a>
+<a href="#1559" id="1559">1559</a>
+<a href="#1560" id="1560">1560</a>
+<a href="#1561" id="1561">1561</a>
+<a href="#1562" id="1562">1562</a>
+<a href="#1563" id="1563">1563</a>
+<a href="#1564" id="1564">1564</a>
+<a href="#1565" id="1565">1565</a>
+<a href="#1566" id="1566">1566</a>
+<a href="#1567" id="1567">1567</a>
+<a href="#1568" id="1568">1568</a>
+<a href="#1569" id="1569">1569</a>
+<a href="#1570" id="1570">1570</a>
+<a href="#1571" id="1571">1571</a>
+<a href="#1572" id="1572">1572</a>
+<a href="#1573" id="1573">1573</a>
+<a href="#1574" id="1574">1574</a>
+<a href="#1575" id="1575">1575</a>
+<a href="#1576" id="1576">1576</a>
+<a href="#1577" id="1577">1577</a>
+<a href="#1578" id="1578">1578</a>
+<a href="#1579" id="1579">1579</a>
+<a href="#1580" id="1580">1580</a>
+<a href="#1581" id="1581">1581</a>
+<a href="#1582" id="1582">1582</a>
+<a href="#1583" id="1583">1583</a>
+<a href="#1584" id="1584">1584</a>
+<a href="#1585" id="1585">1585</a>
+<a href="#1586" id="1586">1586</a>
+<a href="#1587" id="1587">1587</a>
+<a href="#1588" id="1588">1588</a>
+<a href="#1589" id="1589">1589</a>
+<a href="#1590" id="1590">1590</a>
+<a href="#1591" id="1591">1591</a>
+<a href="#1592" id="1592">1592</a>
+<a href="#1593" id="1593">1593</a>
+<a href="#1594" id="1594">1594</a>
+<a href="#1595" id="1595">1595</a>
+<a href="#1596" id="1596">1596</a>
+<a href="#1597" id="1597">1597</a>
+<a href="#1598" id="1598">1598</a>
+<a href="#1599" id="1599">1599</a>
+<a href="#1600" id="1600">1600</a>
+<a href="#1601" id="1601">1601</a>
+<a href="#1602" id="1602">1602</a>
+<a href="#1603" id="1603">1603</a>
+<a href="#1604" id="1604">1604</a>
+<a href="#1605" id="1605">1605</a>
+<a href="#1606" id="1606">1606</a>
+<a href="#1607" id="1607">1607</a>
+<a href="#1608" id="1608">1608</a>
+<a href="#1609" id="1609">1609</a>
+<a href="#1610" id="1610">1610</a>
+<a href="#1611" id="1611">1611</a>
+<a href="#1612" id="1612">1612</a>
+<a href="#1613" id="1613">1613</a>
+<a href="#1614" id="1614">1614</a>
+<a href="#1615" id="1615">1615</a>
+<a href="#1616" id="1616">1616</a>
+<a href="#1617" id="1617">1617</a>
+<a href="#1618" id="1618">1618</a>
+<a href="#1619" id="1619">1619</a>
+<a href="#1620" id="1620">1620</a>
+<a href="#1621" id="1621">1621</a>
+<a href="#1622" id="1622">1622</a>
+<a href="#1623" id="1623">1623</a>
+<a href="#1624" id="1624">1624</a>
+<a href="#1625" id="1625">1625</a>
+<a href="#1626" id="1626">1626</a>
+<a href="#1627" id="1627">1627</a>
+<a href="#1628" id="1628">1628</a>
+<a href="#1629" id="1629">1629</a>
+<a href="#1630" id="1630">1630</a>
+<a href="#1631" id="1631">1631</a>
+<a href="#1632" id="1632">1632</a>
+<a href="#1633" id="1633">1633</a>
+<a href="#1634" id="1634">1634</a>
+<a href="#1635" id="1635">1635</a>
+<a href="#1636" id="1636">1636</a>
+<a href="#1637" id="1637">1637</a>
+<a href="#1638" id="1638">1638</a>
+<a href="#1639" id="1639">1639</a>
+<a href="#1640" id="1640">1640</a>
+<a href="#1641" id="1641">1641</a>
+<a href="#1642" id="1642">1642</a>
+<a href="#1643" id="1643">1643</a>
+<a href="#1644" id="1644">1644</a>
+<a href="#1645" id="1645">1645</a>
+<a href="#1646" id="1646">1646</a>
+<a href="#1647" id="1647">1647</a>
+<a href="#1648" id="1648">1648</a>
+<a href="#1649" id="1649">1649</a>
+<a href="#1650" id="1650">1650</a>
+<a href="#1651" id="1651">1651</a>
+<a href="#1652" id="1652">1652</a>
+<a href="#1653" id="1653">1653</a>
+<a href="#1654" id="1654">1654</a>
+<a href="#1655" id="1655">1655</a>
+<a href="#1656" id="1656">1656</a>
+<a href="#1657" id="1657">1657</a>
+<a href="#1658" id="1658">1658</a>
+<a href="#1659" id="1659">1659</a>
+<a href="#1660" id="1660">1660</a>
+<a href="#1661" id="1661">1661</a>
+<a href="#1662" id="1662">1662</a>
+<a href="#1663" id="1663">1663</a>
+<a href="#1664" id="1664">1664</a>
+<a href="#1665" id="1665">1665</a>
+<a href="#1666" id="1666">1666</a>
+<a href="#1667" id="1667">1667</a>
+<a href="#1668" id="1668">1668</a>
+<a href="#1669" id="1669">1669</a>
+<a href="#1670" id="1670">1670</a>
+<a href="#1671" id="1671">1671</a>
+<a href="#1672" id="1672">1672</a>
+<a href="#1673" id="1673">1673</a>
+<a href="#1674" id="1674">1674</a>
+<a href="#1675" id="1675">1675</a>
+<a href="#1676" id="1676">1676</a>
 </pre></div><pre class="rust"><code><span class="doccomment">//! Starknet related code for `cairo_native`
-
-</span><span class="attr">#![allow(clippy::type_complexity)]
-#![allow(dead_code)]
 
 </span><span class="kw">use </span>starknet_types_core::felt::Felt;
 
 <span class="kw">pub type </span>SyscallResult&lt;T&gt; = std::result::Result&lt;T, Vec&lt;Felt&gt;&gt;;
 
+<span class="attr">#[repr(C)]
+#[derive(Debug)]
+</span><span class="kw">pub struct </span>ArrayAbi&lt;T&gt; {
+    <span class="kw">pub </span>ptr: <span class="kw-2">*mut </span>T,
+    <span class="kw">pub </span>since: u32,
+    <span class="kw">pub </span>until: u32,
+    <span class="kw">pub </span>capacity: u32,
+}
+
 <span class="doccomment">/// Binary representation of a `Felt` (in MLIR).
 </span><span class="attr">#[derive(Debug, Clone)]
-#[cfg_attr(target_arch = <span class="string">"x86_64"</span>, repr(C, align(<span class="number">8</span>)))]
-#[cfg_attr(not(target_arch = <span class="string">"x86_64"</span>), repr(C, align(<span class="number">16</span>)))]
+#[repr(C, align(<span class="number">16</span>))]
 </span><span class="kw">pub struct </span>Felt252Abi(<span class="kw">pub </span>[u8; <span class="number">32</span>]);
 <span class="doccomment">/// Binary representation of a `u256` (in MLIR).
 </span><span class="comment">// TODO: This shouldn't need to be public.
 </span><span class="attr">#[derive(Clone, Copy, Debug, Default, Eq, Hash, Ord, PartialEq, PartialOrd)]
 #[cfg_attr(feature = <span class="string">"with-serde"</span>, derive(serde::Serialize, serde::Deserialize))]
-#[cfg_attr(target_arch = <span class="string">"x86_64"</span>, repr(C, align(<span class="number">8</span>)))]
-#[cfg_attr(not(target_arch = <span class="string">"x86_64"</span>), repr(C, align(<span class="number">16</span>)))]
+#[repr(C, align(<span class="number">16</span>))]
 </span><span class="kw">pub struct </span>U256 {
     <span class="kw">pub </span>hi: u128,
     <span class="kw">pub </span>lo: u128,
@@ -1484,7 +1781,7 @@
     <span class="kw">pub </span>y: U256,
 }
 
-<span class="kw">pub trait </span>StarkNetSyscallHandler {
+<span class="kw">pub trait </span>StarknetSyscallHandler {
     <span class="kw">fn </span>get_block_hash(
         <span class="kw-2">&amp;mut </span><span class="self">self</span>,
         block_number: u64,
@@ -1621,56 +1918,195 @@
         remaining_gas: <span class="kw-2">&amp;mut </span>u128,
     ) -&gt; SyscallResult&lt;(U256, U256)&gt;;
 
-    <span class="comment">// Testing syscalls.
-    </span><span class="kw">fn </span>pop_log(<span class="kw-2">&amp;mut </span><span class="self">self</span>) {
+    <span class="attr">#[cfg(feature = <span class="string">"with-cheatcode"</span>)]
+    </span><span class="kw">fn </span>cheatcode(<span class="kw-2">&amp;mut </span><span class="self">self</span>, _selector: Felt, _input: <span class="kw-2">&amp;</span>[Felt]) -&gt; Vec&lt;Felt&gt; {
+        <span class="macro">unimplemented!</span>();
+    }
+}
+
+<span class="kw">pub struct </span>DummySyscallHandler;
+
+<span class="kw">impl </span>StarknetSyscallHandler <span class="kw">for </span>DummySyscallHandler {
+    <span class="kw">fn </span>get_block_hash(
+        <span class="kw-2">&amp;mut </span><span class="self">self</span>,
+        _block_number: u64,
+        _remaining_gas: <span class="kw-2">&amp;mut </span>u128,
+    ) -&gt; SyscallResult&lt;Felt&gt; {
         <span class="macro">unimplemented!</span>()
     }
 
-    <span class="kw">fn </span>set_account_contract_address(<span class="kw-2">&amp;mut </span><span class="self">self</span>, _contract_address: Felt) {
+    <span class="kw">fn </span>get_execution_info(<span class="kw-2">&amp;mut </span><span class="self">self</span>, _remaining_gas: <span class="kw-2">&amp;mut </span>u128) -&gt; SyscallResult&lt;ExecutionInfo&gt; {
         <span class="macro">unimplemented!</span>()
     }
 
-    <span class="kw">fn </span>set_block_number(<span class="kw-2">&amp;mut </span><span class="self">self</span>, _block_number: u64) {
+    <span class="kw">fn </span>get_execution_info_v2(
+        <span class="kw-2">&amp;mut </span><span class="self">self</span>,
+        _remaining_gas: <span class="kw-2">&amp;mut </span>u128,
+    ) -&gt; SyscallResult&lt;ExecutionInfoV2&gt; {
         <span class="macro">unimplemented!</span>()
     }
 
-    <span class="kw">fn </span>set_block_timestamp(<span class="kw-2">&amp;mut </span><span class="self">self</span>, _block_timestamp: u64) {
+    <span class="kw">fn </span>deploy(
+        <span class="kw-2">&amp;mut </span><span class="self">self</span>,
+        _class_hash: Felt,
+        _contract_address_salt: Felt,
+        _calldata: <span class="kw-2">&amp;</span>[Felt],
+        _deploy_from_zero: bool,
+        _remaining_gas: <span class="kw-2">&amp;mut </span>u128,
+    ) -&gt; SyscallResult&lt;(Felt, Vec&lt;Felt&gt;)&gt; {
         <span class="macro">unimplemented!</span>()
     }
 
-    <span class="kw">fn </span>set_caller_address(<span class="kw-2">&amp;mut </span><span class="self">self</span>, _address: Felt) {
+    <span class="kw">fn </span>replace_class(<span class="kw-2">&amp;mut </span><span class="self">self</span>, _class_hash: Felt, _remaining_gas: <span class="kw-2">&amp;mut </span>u128) -&gt; SyscallResult&lt;()&gt; {
         <span class="macro">unimplemented!</span>()
     }
 
-    <span class="kw">fn </span>set_chain_id(<span class="kw-2">&amp;mut </span><span class="self">self</span>, _chain_id: Felt) {
+    <span class="kw">fn </span>library_call(
+        <span class="kw-2">&amp;mut </span><span class="self">self</span>,
+        _class_hash: Felt,
+        _function_selector: Felt,
+        _calldata: <span class="kw-2">&amp;</span>[Felt],
+        _remaining_gas: <span class="kw-2">&amp;mut </span>u128,
+    ) -&gt; SyscallResult&lt;Vec&lt;Felt&gt;&gt; {
         <span class="macro">unimplemented!</span>()
     }
 
-    <span class="kw">fn </span>set_contract_address(<span class="kw-2">&amp;mut </span><span class="self">self</span>, _address: Felt) {
+    <span class="kw">fn </span>call_contract(
+        <span class="kw-2">&amp;mut </span><span class="self">self</span>,
+        _address: Felt,
+        _entry_point_selector: Felt,
+        _calldata: <span class="kw-2">&amp;</span>[Felt],
+        _remaining_gas: <span class="kw-2">&amp;mut </span>u128,
+    ) -&gt; SyscallResult&lt;Vec&lt;Felt&gt;&gt; {
         <span class="macro">unimplemented!</span>()
     }
 
-    <span class="kw">fn </span>set_max_fee(<span class="kw-2">&amp;mut </span><span class="self">self</span>, _max_fee: u128) {
+    <span class="kw">fn </span>storage_read(
+        <span class="kw-2">&amp;mut </span><span class="self">self</span>,
+        _address_domain: u32,
+        _address: Felt,
+        _remaining_gas: <span class="kw-2">&amp;mut </span>u128,
+    ) -&gt; SyscallResult&lt;Felt&gt; {
         <span class="macro">unimplemented!</span>()
     }
 
-    <span class="kw">fn </span>set_nonce(<span class="kw-2">&amp;mut </span><span class="self">self</span>, _nonce: Felt) {
+    <span class="kw">fn </span>storage_write(
+        <span class="kw-2">&amp;mut </span><span class="self">self</span>,
+        _address_domain: u32,
+        _address: Felt,
+        _value: Felt,
+        _remaining_gas: <span class="kw-2">&amp;mut </span>u128,
+    ) -&gt; SyscallResult&lt;()&gt; {
         <span class="macro">unimplemented!</span>()
     }
 
-    <span class="kw">fn </span>set_sequencer_address(<span class="kw-2">&amp;mut </span><span class="self">self</span>, _address: Felt) {
+    <span class="kw">fn </span>emit_event(
+        <span class="kw-2">&amp;mut </span><span class="self">self</span>,
+        _keys: <span class="kw-2">&amp;</span>[Felt],
+        _data: <span class="kw-2">&amp;</span>[Felt],
+        _remaining_gas: <span class="kw-2">&amp;mut </span>u128,
+    ) -&gt; SyscallResult&lt;()&gt; {
         <span class="macro">unimplemented!</span>()
     }
 
-    <span class="kw">fn </span>set_signature(<span class="kw-2">&amp;mut </span><span class="self">self</span>, _signature: <span class="kw-2">&amp;</span>[Felt]) {
+    <span class="kw">fn </span>send_message_to_l1(
+        <span class="kw-2">&amp;mut </span><span class="self">self</span>,
+        _to_address: Felt,
+        _payload: <span class="kw-2">&amp;</span>[Felt],
+        _remaining_gas: <span class="kw-2">&amp;mut </span>u128,
+    ) -&gt; SyscallResult&lt;()&gt; {
         <span class="macro">unimplemented!</span>()
     }
 
-    <span class="kw">fn </span>set_transaction_hash(<span class="kw-2">&amp;mut </span><span class="self">self</span>, _transaction_hash: Felt) {
+    <span class="kw">fn </span>keccak(<span class="kw-2">&amp;mut </span><span class="self">self</span>, _input: <span class="kw-2">&amp;</span>[u64], _remaining_gas: <span class="kw-2">&amp;mut </span>u128) -&gt; SyscallResult&lt;U256&gt; {
         <span class="macro">unimplemented!</span>()
     }
 
-    <span class="kw">fn </span>set_version(<span class="kw-2">&amp;mut </span><span class="self">self</span>, _version: Felt) {
+    <span class="kw">fn </span>secp256k1_new(
+        <span class="kw-2">&amp;mut </span><span class="self">self</span>,
+        _x: U256,
+        _y: U256,
+        _remaining_gas: <span class="kw-2">&amp;mut </span>u128,
+    ) -&gt; SyscallResult&lt;<span class="prelude-ty">Option</span>&lt;Secp256k1Point&gt;&gt; {
+        <span class="macro">unimplemented!</span>()
+    }
+
+    <span class="kw">fn </span>secp256k1_add(
+        <span class="kw-2">&amp;mut </span><span class="self">self</span>,
+        _p0: Secp256k1Point,
+        _p1: Secp256k1Point,
+        _remaining_gas: <span class="kw-2">&amp;mut </span>u128,
+    ) -&gt; SyscallResult&lt;Secp256k1Point&gt; {
+        <span class="macro">unimplemented!</span>()
+    }
+
+    <span class="kw">fn </span>secp256k1_mul(
+        <span class="kw-2">&amp;mut </span><span class="self">self</span>,
+        _p: Secp256k1Point,
+        _m: U256,
+        _remaining_gas: <span class="kw-2">&amp;mut </span>u128,
+    ) -&gt; SyscallResult&lt;Secp256k1Point&gt; {
+        <span class="macro">unimplemented!</span>()
+    }
+
+    <span class="kw">fn </span>secp256k1_get_point_from_x(
+        <span class="kw-2">&amp;mut </span><span class="self">self</span>,
+        _x: U256,
+        _y_parity: bool,
+        _remaining_gas: <span class="kw-2">&amp;mut </span>u128,
+    ) -&gt; SyscallResult&lt;<span class="prelude-ty">Option</span>&lt;Secp256k1Point&gt;&gt; {
+        <span class="macro">unimplemented!</span>()
+    }
+
+    <span class="kw">fn </span>secp256k1_get_xy(
+        <span class="kw-2">&amp;mut </span><span class="self">self</span>,
+        _p: Secp256k1Point,
+        _remaining_gas: <span class="kw-2">&amp;mut </span>u128,
+    ) -&gt; SyscallResult&lt;(U256, U256)&gt; {
+        <span class="macro">unimplemented!</span>()
+    }
+
+    <span class="kw">fn </span>secp256r1_new(
+        <span class="kw-2">&amp;mut </span><span class="self">self</span>,
+        _x: U256,
+        _y: U256,
+        _remaining_gas: <span class="kw-2">&amp;mut </span>u128,
+    ) -&gt; SyscallResult&lt;<span class="prelude-ty">Option</span>&lt;Secp256r1Point&gt;&gt; {
+        <span class="macro">unimplemented!</span>()
+    }
+
+    <span class="kw">fn </span>secp256r1_add(
+        <span class="kw-2">&amp;mut </span><span class="self">self</span>,
+        _p0: Secp256r1Point,
+        _p1: Secp256r1Point,
+        _remaining_gas: <span class="kw-2">&amp;mut </span>u128,
+    ) -&gt; SyscallResult&lt;Secp256r1Point&gt; {
+        <span class="macro">unimplemented!</span>()
+    }
+
+    <span class="kw">fn </span>secp256r1_mul(
+        <span class="kw-2">&amp;mut </span><span class="self">self</span>,
+        _p: Secp256r1Point,
+        _m: U256,
+        _remaining_gas: <span class="kw-2">&amp;mut </span>u128,
+    ) -&gt; SyscallResult&lt;Secp256r1Point&gt; {
+        <span class="macro">unimplemented!</span>()
+    }
+
+    <span class="kw">fn </span>secp256r1_get_point_from_x(
+        <span class="kw-2">&amp;mut </span><span class="self">self</span>,
+        _x: U256,
+        _y_parity: bool,
+        _remaining_gas: <span class="kw-2">&amp;mut </span>u128,
+    ) -&gt; SyscallResult&lt;<span class="prelude-ty">Option</span>&lt;Secp256r1Point&gt;&gt; {
+        <span class="macro">unimplemented!</span>()
+    }
+
+    <span class="kw">fn </span>secp256r1_get_xy(
+        <span class="kw-2">&amp;mut </span><span class="self">self</span>,
+        _p: Secp256r1Point,
+        _remaining_gas: <span class="kw-2">&amp;mut </span>u128,
+    ) -&gt; SyscallResult&lt;(U256, U256)&gt; {
         <span class="macro">unimplemented!</span>()
     }
 }
@@ -1682,10 +2118,10 @@
         alloc::Layout,
         fmt::Debug,
         mem::{size_of, ManuallyDrop, MaybeUninit},
-        ptr::NonNull,
+        ptr::{null_mut, NonNull},
     };
 
-    <span class="macro">macro_rules! </span>field_offset {
+    <span class="macro">macro_rules!</span> field_offset {
         ( <span class="macro-nonterminal">$ident</span>:path, <span class="macro-nonterminal">$field</span>:ident ) =&gt; {
             <span class="kw">unsafe </span>{
                 <span class="kw">let </span>value_ptr = std::mem::MaybeUninit::&lt;<span class="macro-nonterminal">$ident</span>&gt;::uninit().as_ptr();
@@ -1712,7 +2148,7 @@
     #[derive(Debug)]
     </span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">struct </span>SyscallResultAbiErr {
         <span class="kw">pub </span>tag: u8,
-        <span class="kw">pub </span>payload: (NonNull&lt;Felt252Abi&gt;, u32, u32),
+        <span class="kw">pub </span>payload: ArrayAbi&lt;Felt252Abi&gt;,
     }
 
     <span class="attr">#[repr(C)]
@@ -1738,16 +2174,16 @@
         version: Felt252Abi,
         account_contract_address: Felt252Abi,
         max_fee: u128,
-        signature: (NonNull&lt;Felt252Abi&gt;, u32, u32),
+        signature: ArrayAbi&lt;Felt252Abi&gt;,
         transaction_hash: Felt252Abi,
         chain_id: Felt252Abi,
         nonce: Felt252Abi,
-        resource_bounds: (NonNull&lt;ResourceBoundsAbi&gt;, u32, u32),
+        resource_bounds: ArrayAbi&lt;ResourceBoundsAbi&gt;,
         tip: u128,
-        paymaster_data: (NonNull&lt;Felt252Abi&gt;, u32, u32),
+        paymaster_data: ArrayAbi&lt;Felt252Abi&gt;,
         nonce_data_availability_mode: u32,
         fee_data_availability_mode: u32,
-        account_deployment_data: (NonNull&lt;Felt252Abi&gt;, u32, u32),
+        account_deployment_data: ArrayAbi&lt;Felt252Abi&gt;,
     }
 
     <span class="attr">#[repr(C)]
@@ -1770,15 +2206,22 @@
         version: Felt252Abi,
         account_contract_address: Felt252Abi,
         max_fee: u128,
-        signature: (NonNull&lt;Felt252Abi&gt;, u32, u32),
+        signature: ArrayAbi&lt;Felt252Abi&gt;,
         transaction_hash: Felt252Abi,
         chain_id: Felt252Abi,
         nonce: Felt252Abi,
     }
 
-    <span class="attr">#[repr(C)]
+    <span class="doccomment">/// A C ABI Wrapper around the StarknetSyscallHandler
+    ///
+    /// It contains pointers to functions which can be called through MLIR based on the field offset.
+    /// The functions convert C ABI structures to the Rust equivalent and calls the wrapped implementation.
+    ///
+    /// Unlike runtime functions, the callback table is generic to the StarknetSyscallHandler,
+    /// which allows the user to specify the desired implementation to use during the execution.
+    </span><span class="attr">#[repr(C)]
     #[derive(Debug)]
-    </span><span class="kw">pub struct </span>StarkNetSyscallHandlerCallbacks&lt;<span class="lifetime">'a</span>, T&gt; {
+    </span><span class="kw">pub struct </span>StarknetSyscallHandlerCallbacks&lt;<span class="lifetime">'a</span>, T&gt; {
         self_ptr: <span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw-2">mut </span>T,
 
         get_block_hash: <span class="kw">extern </span><span class="string">"C" </span><span class="kw">fn</span>(
@@ -1798,12 +2241,12 @@
             gas: <span class="kw-2">&amp;mut </span>u128,
         ),
         deploy: <span class="kw">extern </span><span class="string">"C" </span><span class="kw">fn</span>(
-            result_ptr: <span class="kw-2">&amp;mut </span>SyscallResultAbi&lt;(Felt252Abi, (NonNull&lt;Felt252Abi&gt;, u32, u32))&gt;,
+            result_ptr: <span class="kw-2">&amp;mut </span>SyscallResultAbi&lt;(Felt252Abi, ArrayAbi&lt;Felt252Abi&gt;)&gt;,
             ptr: <span class="kw-2">&amp;mut </span>T,
             gas: <span class="kw-2">&amp;mut </span>u128,
             class_hash: <span class="kw-2">&amp;</span>Felt252Abi,
             contract_address_salt: <span class="kw-2">&amp;</span>Felt252Abi,
-            calldata: <span class="kw-2">*const </span>(<span class="kw-2">*const </span>Felt252Abi, u32, u32),
+            calldata: <span class="kw-2">&amp;</span>ArrayAbi&lt;Felt252Abi&gt;,
             deploy_from_zero: bool,
         ),
         replace_class: <span class="kw">extern </span><span class="string">"C" </span><span class="kw">fn</span>(
@@ -1813,20 +2256,20 @@
             class_hash: <span class="kw-2">&amp;</span>Felt252Abi,
         ),
         library_call: <span class="kw">extern </span><span class="string">"C" </span><span class="kw">fn</span>(
-            result_ptr: <span class="kw-2">&amp;mut </span>SyscallResultAbi&lt;(NonNull&lt;Felt252Abi&gt;, u32, u32)&gt;,
+            result_ptr: <span class="kw-2">&amp;mut </span>SyscallResultAbi&lt;ArrayAbi&lt;Felt252Abi&gt;&gt;,
             ptr: <span class="kw-2">&amp;mut </span>T,
             gas: <span class="kw-2">&amp;mut </span>u128,
             class_hash: <span class="kw-2">&amp;</span>Felt252Abi,
             function_selector: <span class="kw-2">&amp;</span>Felt252Abi,
-            calldata: <span class="kw-2">*const </span>(<span class="kw-2">*const </span>Felt252Abi, u32, u32),
+            calldata: <span class="kw-2">&amp;</span>ArrayAbi&lt;Felt252Abi&gt;,
         ),
         call_contract: <span class="kw">extern </span><span class="string">"C" </span><span class="kw">fn</span>(
-            result_ptr: <span class="kw-2">&amp;mut </span>SyscallResultAbi&lt;(NonNull&lt;Felt252Abi&gt;, u32, u32)&gt;,
+            result_ptr: <span class="kw-2">&amp;mut </span>SyscallResultAbi&lt;ArrayAbi&lt;Felt252Abi&gt;&gt;,
             ptr: <span class="kw-2">&amp;mut </span>T,
             gas: <span class="kw-2">&amp;mut </span>u128,
             address: <span class="kw-2">&amp;</span>Felt252Abi,
             entry_point_selector: <span class="kw-2">&amp;</span>Felt252Abi,
-            calldata: <span class="kw-2">*const </span>(<span class="kw-2">*const </span>Felt252Abi, u32, u32),
+            calldata: <span class="kw-2">&amp;</span>ArrayAbi&lt;Felt252Abi&gt;,
         ),
         storage_read: <span class="kw">extern </span><span class="string">"C" </span><span class="kw">fn</span>(
             result_ptr: <span class="kw-2">&amp;mut </span>SyscallResultAbi&lt;Felt252Abi&gt;,
@@ -1847,21 +2290,21 @@
             result_ptr: <span class="kw-2">&amp;mut </span>SyscallResultAbi&lt;()&gt;,
             ptr: <span class="kw-2">&amp;mut </span>T,
             gas: <span class="kw-2">&amp;mut </span>u128,
-            keys: <span class="kw-2">*const </span>(<span class="kw-2">*const </span>Felt252Abi, u32, u32),
-            data: <span class="kw-2">*const </span>(<span class="kw-2">*const </span>Felt252Abi, u32, u32),
+            keys: <span class="kw-2">&amp;</span>ArrayAbi&lt;Felt252Abi&gt;,
+            data: <span class="kw-2">&amp;</span>ArrayAbi&lt;Felt252Abi&gt;,
         ),
         send_message_to_l1: <span class="kw">extern </span><span class="string">"C" </span><span class="kw">fn</span>(
             result_ptr: <span class="kw-2">&amp;mut </span>SyscallResultAbi&lt;()&gt;,
             ptr: <span class="kw-2">&amp;mut </span>T,
             gas: <span class="kw-2">&amp;mut </span>u128,
             to_address: <span class="kw-2">&amp;</span>Felt252Abi,
-            data: <span class="kw-2">*const </span>(<span class="kw-2">*const </span>Felt252Abi, u32, u32),
+            data: <span class="kw-2">&amp;</span>ArrayAbi&lt;Felt252Abi&gt;,
         ),
         keccak: <span class="kw">extern </span><span class="string">"C" </span><span class="kw">fn</span>(
             result_ptr: <span class="kw-2">&amp;mut </span>SyscallResultAbi&lt;U256&gt;,
             ptr: <span class="kw-2">&amp;mut </span>T,
             gas: <span class="kw-2">&amp;mut </span>u128,
-            input: <span class="kw-2">*const </span>(<span class="kw-2">*const </span>u64, u32, u32),
+            input: <span class="kw-2">&amp;</span>ArrayAbi&lt;u64&gt;,
         ),
 
         secp256k1_new: <span class="kw">extern </span><span class="string">"C" </span><span class="kw">fn</span>(
@@ -1933,9 +2376,17 @@
             gas: <span class="kw-2">&amp;mut </span>u128,
             p: <span class="kw-2">&amp;</span>Secp256r1Point,
         ),
+        <span class="comment">// testing syscalls
+        </span><span class="attr">#[cfg(feature = <span class="string">"with-cheatcode"</span>)]
+        </span><span class="kw">pub </span>cheatcode: <span class="kw">extern </span><span class="string">"C" </span><span class="kw">fn</span>(
+            result_ptr: <span class="kw-2">&amp;mut </span>ArrayAbi&lt;Felt252Abi&gt;,
+            ptr: <span class="kw-2">&amp;mut </span>T,
+            selector: <span class="kw-2">&amp;</span>Felt252Abi,
+            input: <span class="kw-2">&amp;</span>ArrayAbi&lt;Felt252Abi&gt;,
+        ),
     }
 
-    <span class="kw">impl</span>&lt;<span class="lifetime">'a</span>, T&gt; StarkNetSyscallHandlerCallbacks&lt;<span class="lifetime">'a</span>, T&gt;
+    <span class="kw">impl</span>&lt;<span class="lifetime">'a</span>, T&gt; StarknetSyscallHandlerCallbacks&lt;<span class="lifetime">'a</span>, T&gt;
     <span class="kw">where
         </span>T: <span class="lifetime">'a</span>,
     {
@@ -1968,9 +2419,9 @@
     }
 
     <span class="attr">#[allow(unused_variables)]
-    </span><span class="kw">impl</span>&lt;<span class="lifetime">'a</span>, T&gt; StarkNetSyscallHandlerCallbacks&lt;<span class="lifetime">'a</span>, T&gt;
+    </span><span class="kw">impl</span>&lt;<span class="lifetime">'a</span>, T&gt; StarknetSyscallHandlerCallbacks&lt;<span class="lifetime">'a</span>, T&gt;
     <span class="kw">where
-        </span>T: StarkNetSyscallHandler + <span class="lifetime">'a</span>,
+        </span>T: StarknetSyscallHandler + <span class="lifetime">'a</span>,
     {
         <span class="kw">pub fn </span>new(handler: <span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw-2">mut </span>T) -&gt; <span class="self">Self </span>{
             <span class="self">Self </span>{
@@ -1997,18 +2448,36 @@
                 secp256r1_mul: <span class="self">Self</span>::wrap_secp256r1_mul,
                 secp256r1_get_point_from_x: <span class="self">Self</span>::wrap_secp256r1_get_point_from_x,
                 secp256r1_get_xy: <span class="self">Self</span>::wrap_secp256r1_get_xy,
+                <span class="attr">#[cfg(feature = <span class="string">"with-cheatcode"</span>)]
+                </span>cheatcode: <span class="self">Self</span>::wrap_cheatcode,
             }
         }
 
-        <span class="kw">unsafe fn </span>alloc_mlir_array&lt;E: Clone&gt;(data: <span class="kw-2">&amp;</span>[E]) -&gt; (NonNull&lt;E&gt;, u32, u32) {
-            <span class="kw">let </span>ptr = libc::malloc(Layout::array::&lt;E&gt;(data.len()).unwrap().size()) <span class="kw">as </span><span class="kw-2">*mut </span>E;
+        <span class="kw">unsafe fn </span>alloc_mlir_array&lt;E: Clone&gt;(data: <span class="kw-2">&amp;</span>[E]) -&gt; ArrayAbi&lt;E&gt; {
+            <span class="kw">match </span>data.len() {
+                <span class="number">0 </span>=&gt; ArrayAbi {
+                    ptr: null_mut(),
+                    since: <span class="number">0</span>,
+                    until: <span class="number">0</span>,
+                    capacity: <span class="number">0</span>,
+                },
+                <span class="kw">_ </span>=&gt; {
+                    <span class="kw">let </span>ptr =
+                        libc::malloc(Layout::array::&lt;E&gt;(data.len()).unwrap().size()) <span class="kw">as </span><span class="kw-2">*mut </span>E;
 
-            <span class="kw">let </span>len: u32 = data.len().try_into().unwrap();
-            <span class="kw">for </span>(i, val) <span class="kw">in </span>data.iter().enumerate() {
-                ptr.add(i).write(val.clone());
+                    <span class="kw">let </span>len: u32 = data.len().try_into().unwrap();
+                    <span class="kw">for </span>(i, val) <span class="kw">in </span>data.iter().enumerate() {
+                        ptr.add(i).write(val.clone());
+                    }
+
+                    ArrayAbi {
+                        ptr,
+                        since: <span class="number">0</span>,
+                        until: len,
+                        capacity: len,
+                    }
+                }
             }
-
-            (NonNull::new(ptr).unwrap(), len, len)
         }
 
         <span class="kw">fn </span>wrap_error&lt;E&gt;(e: <span class="kw-2">&amp;</span>[Felt]) -&gt; SyscallResultAbi&lt;E&gt; {
@@ -2040,6 +2509,34 @@
                 },
                 <span class="prelude-val">Err</span>(e) =&gt; <span class="self">Self</span>::wrap_error(<span class="kw-2">&amp;</span>e),
             };
+        }
+
+        <span class="attr">#[cfg(feature = <span class="string">"with-cheatcode"</span>)]
+        </span><span class="kw">extern </span><span class="string">"C" </span><span class="kw">fn </span>wrap_cheatcode(
+            result_ptr: <span class="kw-2">&amp;mut </span>ArrayAbi&lt;Felt252Abi&gt;,
+            ptr: <span class="kw-2">&amp;mut </span>T,
+            selector: <span class="kw-2">&amp;</span>Felt252Abi,
+            input: <span class="kw-2">&amp;</span>ArrayAbi&lt;Felt252Abi&gt;,
+        ) {
+            <span class="kw">let </span>input: Vec&lt;<span class="kw">_</span>&gt; = <span class="kw">unsafe </span>{
+                <span class="kw">let </span>since_offset = input.since <span class="kw">as </span>usize;
+                <span class="kw">let </span>until_offset = input.until <span class="kw">as </span>usize;
+                <span class="macro">debug_assert!</span>(since_offset &lt;= until_offset);
+                <span class="kw">let </span>len = until_offset - since_offset;
+                std::slice::from_raw_parts(input.ptr.add(since_offset), len)
+            }
+            .iter()
+            .map(|x| Felt::from_bytes_le(<span class="kw-2">&amp;</span>x.<span class="number">0</span>))
+            .collect();
+            <span class="kw">let </span>selector = Felt::from_bytes_le(<span class="kw-2">&amp;</span>selector.<span class="number">0</span>);
+
+            <span class="kw">let </span>result = ptr
+                .cheatcode(selector, <span class="kw-2">&amp;</span>input)
+                .into_iter()
+                .map(|x| Felt252Abi(x.to_bytes_le()))
+                .collect::&lt;Vec&lt;<span class="kw">_</span>&gt;&gt;();
+
+            <span class="kw-2">*</span>result_ptr = <span class="kw">unsafe </span>{ <span class="self">Self</span>::alloc_mlir_array(<span class="kw-2">&amp;</span>result) };
         }
 
         <span class="kw">extern </span><span class="string">"C" </span><span class="kw">fn </span>wrap_get_execution_info(
@@ -2183,6 +2680,8 @@
                                     .map(|x| Felt252Abi(x.to_bytes_le()))
                                     .collect::&lt;Vec&lt;<span class="kw">_</span>&gt;&gt;(),
                             );
+                            tx_info_ptr.as_mut().account_contract_address =
+                                Felt252Abi(x.tx_info.account_contract_address.to_bytes_le());
 
                             execution_info_ptr.as_mut().block_info = block_info_ptr;
                             execution_info_ptr.as_mut().tx_info = tx_info_ptr;
@@ -2204,12 +2703,12 @@
         <span class="comment">// TODO: change all from_bytes_be to from_bytes_ne when added and undo byte swapping.
 
         </span><span class="kw">extern </span><span class="string">"C" </span><span class="kw">fn </span>wrap_deploy(
-            result_ptr: <span class="kw-2">&amp;mut </span>SyscallResultAbi&lt;(Felt252Abi, (NonNull&lt;Felt252Abi&gt;, u32, u32))&gt;,
+            result_ptr: <span class="kw-2">&amp;mut </span>SyscallResultAbi&lt;(Felt252Abi, ArrayAbi&lt;Felt252Abi&gt;)&gt;,
             ptr: <span class="kw-2">&amp;mut </span>T,
             gas: <span class="kw-2">&amp;mut </span>u128,
             class_hash: <span class="kw-2">&amp;</span>Felt252Abi,
             contract_address_salt: <span class="kw-2">&amp;</span>Felt252Abi,
-            calldata: <span class="kw-2">*const </span>(<span class="kw-2">*const </span>Felt252Abi, u32, u32),
+            calldata: <span class="kw-2">&amp;</span>ArrayAbi&lt;Felt252Abi&gt;,
             deploy_from_zero: bool,
         ) {
             <span class="kw">let </span>class_hash = Felt::from_bytes_be(<span class="kw-2">&amp;</span>{
@@ -2224,8 +2723,14 @@
             });
 
             <span class="kw">let </span>calldata: Vec&lt;<span class="kw">_</span>&gt; = <span class="kw">unsafe </span>{
-                <span class="kw">let </span>len = (<span class="kw-2">*</span>calldata).<span class="number">1 </span><span class="kw">as </span>usize;
-                std::slice::from_raw_parts((<span class="kw-2">*</span>calldata).<span class="number">0</span>, len)
+                <span class="kw">let </span>since_offset = calldata.since <span class="kw">as </span>usize;
+                <span class="kw">let </span>until_offset = calldata.until <span class="kw">as </span>usize;
+                <span class="macro">debug_assert!</span>(since_offset &lt;= until_offset);
+                <span class="kw">let </span>len = until_offset - since_offset;
+                <span class="kw">match </span>len {
+                    <span class="number">0 </span>=&gt; <span class="kw-2">&amp;</span>[],
+                    <span class="kw">_ </span>=&gt; std::slice::from_raw_parts(calldata.ptr.add(since_offset), len),
+                }
             }
             .iter()
             .map(|x| {
@@ -2285,12 +2790,12 @@
         }
 
         <span class="kw">extern </span><span class="string">"C" </span><span class="kw">fn </span>wrap_library_call(
-            result_ptr: <span class="kw-2">&amp;mut </span>SyscallResultAbi&lt;(NonNull&lt;Felt252Abi&gt;, u32, u32)&gt;,
+            result_ptr: <span class="kw-2">&amp;mut </span>SyscallResultAbi&lt;ArrayAbi&lt;Felt252Abi&gt;&gt;,
             ptr: <span class="kw-2">&amp;mut </span>T,
             gas: <span class="kw-2">&amp;mut </span>u128,
             class_hash: <span class="kw-2">&amp;</span>Felt252Abi,
             function_selector: <span class="kw-2">&amp;</span>Felt252Abi,
-            calldata: <span class="kw-2">*const </span>(<span class="kw-2">*const </span>Felt252Abi, u32, u32),
+            calldata: <span class="kw-2">&amp;</span>ArrayAbi&lt;Felt252Abi&gt;,
         ) {
             <span class="kw">let </span>class_hash = Felt::from_bytes_be(<span class="kw-2">&amp;</span>{
                 <span class="kw">let </span><span class="kw-2">mut </span>data = class_hash.<span class="number">0</span>;
@@ -2304,8 +2809,14 @@
             });
 
             <span class="kw">let </span>calldata: Vec&lt;<span class="kw">_</span>&gt; = <span class="kw">unsafe </span>{
-                <span class="kw">let </span>len = (<span class="kw-2">*</span>calldata).<span class="number">1 </span><span class="kw">as </span>usize;
-                std::slice::from_raw_parts((<span class="kw-2">*</span>calldata).<span class="number">0</span>, len)
+                <span class="kw">let </span>since_offset = calldata.since <span class="kw">as </span>usize;
+                <span class="kw">let </span>until_offset = calldata.until <span class="kw">as </span>usize;
+                <span class="macro">debug_assert!</span>(since_offset &lt;= until_offset);
+                <span class="kw">let </span>len = until_offset - since_offset;
+                <span class="kw">match </span>len {
+                    <span class="number">0 </span>=&gt; <span class="kw-2">&amp;</span>[],
+                    <span class="kw">_ </span>=&gt; std::slice::from_raw_parts(calldata.ptr.add(since_offset), len),
+                }
             }
             .iter()
             .map(|x| {
@@ -2335,12 +2846,12 @@
         }
 
         <span class="kw">extern </span><span class="string">"C" </span><span class="kw">fn </span>wrap_call_contract(
-            result_ptr: <span class="kw-2">&amp;mut </span>SyscallResultAbi&lt;(NonNull&lt;Felt252Abi&gt;, u32, u32)&gt;,
+            result_ptr: <span class="kw-2">&amp;mut </span>SyscallResultAbi&lt;ArrayAbi&lt;Felt252Abi&gt;&gt;,
             ptr: <span class="kw-2">&amp;mut </span>T,
             gas: <span class="kw-2">&amp;mut </span>u128,
             address: <span class="kw-2">&amp;</span>Felt252Abi,
             entry_point_selector: <span class="kw-2">&amp;</span>Felt252Abi,
-            calldata: <span class="kw-2">*const </span>(<span class="kw-2">*const </span>Felt252Abi, u32, u32),
+            calldata: <span class="kw-2">&amp;</span>ArrayAbi&lt;Felt252Abi&gt;,
         ) {
             <span class="kw">let </span>address = Felt::from_bytes_be(<span class="kw-2">&amp;</span>{
                 <span class="kw">let </span><span class="kw-2">mut </span>data = address.<span class="number">0</span>;
@@ -2354,8 +2865,14 @@
             });
 
             <span class="kw">let </span>calldata: Vec&lt;<span class="kw">_</span>&gt; = <span class="kw">unsafe </span>{
-                <span class="kw">let </span>len = (<span class="kw-2">*</span>calldata).<span class="number">1 </span><span class="kw">as </span>usize;
-                std::slice::from_raw_parts((<span class="kw-2">*</span>calldata).<span class="number">0</span>, len)
+                <span class="kw">let </span>since_offset = calldata.since <span class="kw">as </span>usize;
+                <span class="kw">let </span>until_offset = calldata.until <span class="kw">as </span>usize;
+                <span class="macro">debug_assert!</span>(since_offset &lt;= until_offset);
+                <span class="kw">let </span>len = until_offset - since_offset;
+                <span class="kw">match </span>len {
+                    <span class="number">0 </span>=&gt; <span class="kw-2">&amp;</span>[],
+                    <span class="kw">_ </span>=&gt; std::slice::from_raw_parts(calldata.ptr.add(since_offset), len),
+                }
             }
             .iter()
             .map(|x| {
@@ -2444,12 +2961,18 @@
             result_ptr: <span class="kw-2">&amp;mut </span>SyscallResultAbi&lt;()&gt;,
             ptr: <span class="kw-2">&amp;mut </span>T,
             gas: <span class="kw-2">&amp;mut </span>u128,
-            keys: <span class="kw-2">*const </span>(<span class="kw-2">*const </span>Felt252Abi, u32, u32),
-            data: <span class="kw-2">*const </span>(<span class="kw-2">*const </span>Felt252Abi, u32, u32),
+            keys: <span class="kw-2">&amp;</span>ArrayAbi&lt;Felt252Abi&gt;,
+            data: <span class="kw-2">&amp;</span>ArrayAbi&lt;Felt252Abi&gt;,
         ) {
             <span class="kw">let </span>keys: Vec&lt;<span class="kw">_</span>&gt; = <span class="kw">unsafe </span>{
-                <span class="kw">let </span>len = (<span class="kw-2">*</span>keys).<span class="number">1 </span><span class="kw">as </span>usize;
-                std::slice::from_raw_parts((<span class="kw-2">*</span>keys).<span class="number">0</span>, len)
+                <span class="kw">let </span>since_offset = keys.since <span class="kw">as </span>usize;
+                <span class="kw">let </span>until_offset = keys.until <span class="kw">as </span>usize;
+                <span class="macro">debug_assert!</span>(since_offset &lt;= until_offset);
+                <span class="kw">let </span>len = until_offset - since_offset;
+                <span class="kw">match </span>len {
+                    <span class="number">0 </span>=&gt; <span class="kw-2">&amp;</span>[],
+                    <span class="kw">_ </span>=&gt; std::slice::from_raw_parts(keys.ptr.add(since_offset), len),
+                }
             }
             .iter()
             .map(|x| {
@@ -2462,8 +2985,14 @@
             .collect();
 
             <span class="kw">let </span>data: Vec&lt;<span class="kw">_</span>&gt; = <span class="kw">unsafe </span>{
-                <span class="kw">let </span>len = (<span class="kw-2">*</span>data).<span class="number">1 </span><span class="kw">as </span>usize;
-                std::slice::from_raw_parts((<span class="kw-2">*</span>data).<span class="number">0</span>, len)
+                <span class="kw">let </span>since_offset = data.since <span class="kw">as </span>usize;
+                <span class="kw">let </span>until_offset = data.until <span class="kw">as </span>usize;
+                <span class="macro">debug_assert!</span>(since_offset &lt;= until_offset);
+                <span class="kw">let </span>len = until_offset - since_offset;
+                <span class="kw">match </span>len {
+                    <span class="number">0 </span>=&gt; <span class="kw-2">&amp;</span>[],
+                    <span class="kw">_ </span>=&gt; std::slice::from_raw_parts(data.ptr.add(since_offset), len),
+                }
             }
             .iter()
             .map(|x| {
@@ -2493,7 +3022,7 @@
             ptr: <span class="kw-2">&amp;mut </span>T,
             gas: <span class="kw-2">&amp;mut </span>u128,
             to_address: <span class="kw-2">&amp;</span>Felt252Abi,
-            payload: <span class="kw-2">*const </span>(<span class="kw-2">*const </span>Felt252Abi, u32, u32),
+            payload: <span class="kw-2">&amp;</span>ArrayAbi&lt;Felt252Abi&gt;,
         ) {
             <span class="kw">let </span>to_address = Felt::from_bytes_be(<span class="kw-2">&amp;</span>{
                 <span class="kw">let </span><span class="kw-2">mut </span>data = to_address.<span class="number">0</span>;
@@ -2501,8 +3030,14 @@
                 data
             });
             <span class="kw">let </span>payload: Vec&lt;<span class="kw">_</span>&gt; = <span class="kw">unsafe </span>{
-                <span class="kw">let </span>len = (<span class="kw-2">*</span>payload).<span class="number">1 </span><span class="kw">as </span>usize;
-                std::slice::from_raw_parts((<span class="kw-2">*</span>payload).<span class="number">0</span>, len)
+                <span class="kw">let </span>since_offset = payload.since <span class="kw">as </span>usize;
+                <span class="kw">let </span>until_offset = payload.until <span class="kw">as </span>usize;
+                <span class="macro">debug_assert!</span>(since_offset &lt;= until_offset);
+                <span class="kw">let </span>len = until_offset - since_offset;
+                <span class="kw">match </span>len {
+                    <span class="number">0 </span>=&gt; <span class="kw-2">&amp;</span>[],
+                    <span class="kw">_ </span>=&gt; std::slice::from_raw_parts(payload.ptr.add(since_offset), len),
+                }
             }
             .iter()
             .map(|x| {
@@ -2531,12 +3066,17 @@
             result_ptr: <span class="kw-2">&amp;mut </span>SyscallResultAbi&lt;U256&gt;,
             ptr: <span class="kw-2">&amp;mut </span>T,
             gas: <span class="kw-2">&amp;mut </span>u128,
-            input: <span class="kw-2">*const </span>(<span class="kw-2">*const </span>u64, u32, u32),
+            input: <span class="kw-2">&amp;</span>ArrayAbi&lt;u64&gt;,
         ) {
             <span class="kw">let </span>input = <span class="kw">unsafe </span>{
-                <span class="kw">let </span>len = (<span class="kw-2">*</span>input).<span class="number">1 </span><span class="kw">as </span>usize;
-
-                std::slice::from_raw_parts((<span class="kw-2">*</span>input).<span class="number">0</span>, len)
+                <span class="kw">let </span>since_offset = input.since <span class="kw">as </span>usize;
+                <span class="kw">let </span>until_offset = input.until <span class="kw">as </span>usize;
+                <span class="macro">debug_assert!</span>(since_offset &lt;= until_offset);
+                <span class="kw">let </span>len = until_offset - since_offset;
+                <span class="kw">match </span>len {
+                    <span class="number">0 </span>=&gt; <span class="kw-2">&amp;</span>[],
+                    <span class="kw">_ </span>=&gt; std::slice::from_raw_parts(input.ptr.add(since_offset), len),
+                }
             };
 
             <span class="kw">let </span>result = ptr.keccak(input, gas);
@@ -2559,7 +3099,9 @@
             x: <span class="kw-2">&amp;</span>U256,
             y: <span class="kw-2">&amp;</span>U256,
         ) {
-            <span class="kw">let </span>result = ptr.secp256k1_new(<span class="kw-2">*</span>x, <span class="kw-2">*</span>y, gas);
+            <span class="kw">let </span>x = <span class="kw-2">*</span>x;
+            <span class="kw">let </span>y = <span class="kw-2">*</span>y;
+            <span class="kw">let </span>result = ptr.secp256k1_new(x, y, gas);
 
             <span class="kw-2">*</span>result_ptr = <span class="kw">match </span>result {
                 <span class="prelude-val">Ok</span>(x) =&gt; SyscallResultAbi {
@@ -2582,7 +3124,9 @@
             p0: <span class="kw-2">&amp;</span>Secp256k1Point,
             p1: <span class="kw-2">&amp;</span>Secp256k1Point,
         ) {
-            <span class="kw">let </span>result = ptr.secp256k1_add(<span class="kw-2">*</span>p0, <span class="kw-2">*</span>p1, gas);
+            <span class="kw">let </span>p0 = <span class="kw-2">*</span>p0;
+            <span class="kw">let </span>p1 = <span class="kw-2">*</span>p1;
+            <span class="kw">let </span>result = ptr.secp256k1_add(p0, p1, gas);
 
             <span class="kw-2">*</span>result_ptr = <span class="kw">match </span>result {
                 <span class="prelude-val">Ok</span>(x) =&gt; SyscallResultAbi {
@@ -2602,7 +3146,10 @@
             p: <span class="kw-2">&amp;</span>Secp256k1Point,
             scalar: <span class="kw-2">&amp;</span>U256,
         ) {
-            <span class="kw">let </span>result = ptr.secp256k1_mul(<span class="kw-2">*</span>p, <span class="kw-2">*</span>scalar, gas);
+            <span class="comment">// Seems like it's important to dereference and create a local instead of at call site directly.
+            </span><span class="kw">let </span>scalar = <span class="kw-2">*</span>scalar;
+            <span class="kw">let </span>p = <span class="kw-2">*</span>p;
+            <span class="kw">let </span>result = ptr.secp256k1_mul(p, scalar, gas);
 
             <span class="kw-2">*</span>result_ptr = <span class="kw">match </span>result {
                 <span class="prelude-val">Ok</span>(x) =&gt; SyscallResultAbi {
@@ -2622,7 +3169,9 @@
             x: <span class="kw-2">&amp;</span>U256,
             y_parity: <span class="kw-2">&amp;</span>bool,
         ) {
-            <span class="kw">let </span>result = ptr.secp256k1_get_point_from_x(<span class="kw-2">*</span>x, <span class="kw-2">*</span>y_parity, gas);
+            <span class="kw">let </span>x = <span class="kw-2">*</span>x;
+            <span class="kw">let </span>y_parity = <span class="kw-2">*</span>y_parity;
+            <span class="kw">let </span>result = ptr.secp256k1_get_point_from_x(x, y_parity, gas);
 
             <span class="kw-2">*</span>result_ptr = <span class="kw">match </span>result {
                 <span class="prelude-val">Ok</span>(x) =&gt; SyscallResultAbi {
@@ -2644,7 +3193,8 @@
             gas: <span class="kw-2">&amp;mut </span>u128,
             p: <span class="kw-2">&amp;</span>Secp256k1Point,
         ) {
-            <span class="kw">let </span>result = ptr.secp256k1_get_xy(<span class="kw-2">*</span>p, gas);
+            <span class="kw">let </span>p = <span class="kw-2">*</span>p;
+            <span class="kw">let </span>result = ptr.secp256k1_get_xy(p, gas);
 
             <span class="kw-2">*</span>result_ptr = <span class="kw">match </span>result {
                 <span class="prelude-val">Ok</span>(x) =&gt; SyscallResultAbi {
@@ -2664,7 +3214,9 @@
             x: <span class="kw-2">&amp;</span>U256,
             y: <span class="kw-2">&amp;</span>U256,
         ) {
-            <span class="kw">let </span>result = ptr.secp256r1_new(<span class="kw-2">*</span>x, <span class="kw-2">*</span>y, gas);
+            <span class="kw">let </span>x = <span class="kw-2">*</span>x;
+            <span class="kw">let </span>y = <span class="kw-2">*</span>y;
+            <span class="kw">let </span>result = ptr.secp256r1_new(x, y, gas);
 
             <span class="kw-2">*</span>result_ptr = <span class="kw">match </span>result {
                 <span class="prelude-val">Ok</span>(x) =&gt; SyscallResultAbi {
@@ -2687,7 +3239,9 @@
             p0: <span class="kw-2">&amp;</span>Secp256r1Point,
             p1: <span class="kw-2">&amp;</span>Secp256r1Point,
         ) {
-            <span class="kw">let </span>result = ptr.secp256r1_add(<span class="kw-2">*</span>p0, <span class="kw-2">*</span>p1, gas);
+            <span class="kw">let </span>p0 = <span class="kw-2">*</span>p0;
+            <span class="kw">let </span>p1 = <span class="kw-2">*</span>p1;
+            <span class="kw">let </span>result = ptr.secp256r1_add(p0, p1, gas);
 
             <span class="kw-2">*</span>result_ptr = <span class="kw">match </span>result {
                 <span class="prelude-val">Ok</span>(x) =&gt; SyscallResultAbi {
@@ -2707,7 +3261,9 @@
             p: <span class="kw-2">&amp;</span>Secp256r1Point,
             scalar: <span class="kw-2">&amp;</span>U256,
         ) {
-            <span class="kw">let </span>result = ptr.secp256r1_mul(<span class="kw-2">*</span>p, <span class="kw-2">*</span>scalar, gas);
+            <span class="kw">let </span>scalar = <span class="kw-2">*</span>scalar;
+            <span class="kw">let </span>p = <span class="kw-2">*</span>p;
+            <span class="kw">let </span>result = ptr.secp256r1_mul(p, scalar, gas);
 
             <span class="kw-2">*</span>result_ptr = <span class="kw">match </span>result {
                 <span class="prelude-val">Ok</span>(x) =&gt; SyscallResultAbi {
@@ -2727,7 +3283,9 @@
             x: <span class="kw-2">&amp;</span>U256,
             y_parity: <span class="kw-2">&amp;</span>bool,
         ) {
-            <span class="kw">let </span>result = ptr.secp256r1_get_point_from_x(<span class="kw-2">*</span>x, <span class="kw-2">*</span>y_parity, gas);
+            <span class="kw">let </span>x = <span class="kw-2">*</span>x;
+            <span class="kw">let </span>y_parity = <span class="kw-2">*</span>y_parity;
+            <span class="kw">let </span>result = ptr.secp256r1_get_point_from_x(x, y_parity, gas);
 
             <span class="kw-2">*</span>result_ptr = <span class="kw">match </span>result {
                 <span class="prelude-val">Ok</span>(x) =&gt; SyscallResultAbi {
@@ -2749,7 +3307,8 @@
             gas: <span class="kw-2">&amp;mut </span>u128,
             p: <span class="kw-2">&amp;</span>Secp256r1Point,
         ) {
-            <span class="kw">let </span>result = ptr.secp256r1_get_xy(<span class="kw-2">*</span>p, gas);
+            <span class="kw">let </span>p = <span class="kw-2">*</span>p;
+            <span class="kw">let </span>result = ptr.secp256r1_get_xy(p, gas);
 
             <span class="kw-2">*</span>result_ptr = <span class="kw">match </span>result {
                 <span class="prelude-val">Ok</span>(x) =&gt; SyscallResultAbi {
@@ -2762,5 +3321,33 @@
             };
         }
     }
+}
+
+<span class="attr">#[cfg(feature = <span class="string">"with-cheatcode"</span>)]
+</span><span class="macro">thread_local!</span>(<span class="kw">pub static </span>SYSCALL_HANDLER_VTABLE: std::cell::Cell&lt;<span class="kw-2">*mut </span>()&gt; = <span class="kw">const </span>{ std::cell::Cell::new(std::ptr::null_mut()) });
+
+<span class="attr">#[allow(non_snake_case)]
+#[cfg(feature = <span class="string">"with-cheatcode"</span>)]
+</span><span class="doccomment">/// Runtime function that calls the `cheatcode` syscall
+///
+/// The Cairo compiler doesn't specify that the cheatcode syscall needs the syscall handler,
+/// so a pointer to `StarknetSyscallHandlerCallbacks` is stored as a `thread::LocalKey` and accesed in runtime by this function.
+</span><span class="kw">pub extern </span><span class="string">"C" </span><span class="kw">fn </span>cairo_native__vtable_cheatcode(
+    result_ptr: <span class="kw-2">&amp;mut </span>ArrayAbi&lt;Felt252Abi&gt;,
+    selector: <span class="kw-2">&amp;</span>Felt252Abi,
+    input: <span class="kw-2">&amp;</span>ArrayAbi&lt;Felt252Abi&gt;,
+) {
+    <span class="kw">let </span>ptr = SYSCALL_HANDLER_VTABLE.with(|ptr| ptr.get());
+    <span class="macro">assert!</span>(!ptr.is_null());
+
+    <span class="kw">let </span>callbacks_ptr = ptr <span class="kw">as </span><span class="kw-2">*mut </span>handler::StarknetSyscallHandlerCallbacks&lt;DummySyscallHandler&gt;;
+    <span class="kw">let </span>callbacks = <span class="kw">unsafe </span>{ callbacks_ptr.as_mut().expect(<span class="string">"should not be null"</span>) };
+
+    <span class="comment">// The `StarknetSyscallHandler` is stored as a reference in the first field of `StarknetSyscalLHandlerCallbacks`,
+    // so we can interpret `ptr` as a double pointer to the handler.
+    </span><span class="kw">let </span>handler_ptr_ptr = ptr <span class="kw">as </span><span class="kw-2">*mut *mut </span>DummySyscallHandler;
+    <span class="kw">let </span>handler = <span class="kw">unsafe </span>{ (<span class="kw-2">*</span>handler_ptr_ptr).as_mut().expect(<span class="string">"should not be null"</span>) };
+
+    (callbacks.cheatcode)(result_ptr, handler, selector, input);
 }
 </code></pre></div></section></main></body></html>

@@ -1,5 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/utils.rs`."><title>utils.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="cairo_native" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
-    <main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/utils.rs`."><title>utils.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-081576b923113409.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="cairo_native" data-themes="" data-resource-suffix="" data-rustdoc-version="1.79.0 (129f3b996 2024-06-10)" data-channel="1.79.0" data-search-js="search-bf21c90c8c1d92b1.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-e32f0c247825364d.js"></script><script defer src="../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-20a3ad099b048cf2.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-09095024cf37855e.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../cairo_native/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Type ‘S’ or ‘/’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings">Settings</a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -1067,57 +1066,18 @@
 <a href="#1066" id="1066">1066</a>
 <a href="#1067" id="1067">1067</a>
 <a href="#1068" id="1068">1068</a>
-<a href="#1069" id="1069">1069</a>
-<a href="#1070" id="1070">1070</a>
-<a href="#1071" id="1071">1071</a>
-<a href="#1072" id="1072">1072</a>
-<a href="#1073" id="1073">1073</a>
-<a href="#1074" id="1074">1074</a>
-<a href="#1075" id="1075">1075</a>
-<a href="#1076" id="1076">1076</a>
-<a href="#1077" id="1077">1077</a>
-<a href="#1078" id="1078">1078</a>
-<a href="#1079" id="1079">1079</a>
-<a href="#1080" id="1080">1080</a>
-<a href="#1081" id="1081">1081</a>
-<a href="#1082" id="1082">1082</a>
-<a href="#1083" id="1083">1083</a>
-<a href="#1084" id="1084">1084</a>
-<a href="#1085" id="1085">1085</a>
-<a href="#1086" id="1086">1086</a>
-<a href="#1087" id="1087">1087</a>
-<a href="#1088" id="1088">1088</a>
-<a href="#1089" id="1089">1089</a>
-<a href="#1090" id="1090">1090</a>
-<a href="#1091" id="1091">1091</a>
-<a href="#1092" id="1092">1092</a>
-<a href="#1093" id="1093">1093</a>
-<a href="#1094" id="1094">1094</a>
-<a href="#1095" id="1095">1095</a>
-<a href="#1096" id="1096">1096</a>
-<a href="#1097" id="1097">1097</a>
-<a href="#1098" id="1098">1098</a>
-<a href="#1099" id="1099">1099</a>
-<a href="#1100" id="1100">1100</a>
-<a href="#1101" id="1101">1101</a>
-<a href="#1102" id="1102">1102</a>
-<a href="#1103" id="1103">1103</a>
-<a href="#1104" id="1104">1104</a>
-<a href="#1105" id="1105">1105</a>
-<a href="#1106" id="1106">1106</a>
-<a href="#1107" id="1107">1107</a>
-<a href="#1108" id="1108">1108</a>
-<a href="#1109" id="1109">1109</a>
-<a href="#1110" id="1110">1110</a>
-<a href="#1111" id="1111">1111</a>
 </pre></div><pre class="rust"><code><span class="doccomment">//! # Various utilities
 
 </span><span class="kw">use crate</span>::{
+    debug_info::{DebugInfo, DebugLocations},
     metadata::MetadataStorage,
     types::{felt252::PRIME, TypeBuilder},
     OptLevel,
 };
-<span class="kw">use </span>cairo_lang_compiler::CompilerConfig;
+<span class="kw">use </span>cairo_lang_compiler::{
+    compile_prepared_db, db::RootDatabase, diagnostics::DiagnosticsReporter,
+    project::setup_project, CompilerConfig,
+};
 <span class="kw">use </span>cairo_lang_sierra::{
     extensions::core::{CoreLibfunc, CoreType},
     ids::{ConcreteTypeId, FunctionId},
@@ -1162,17 +1122,9 @@
 
 <span class="doccomment">/// Return the layout for an integer of arbitrary width.
 ///
-/// This assumes the platform's maximum (effective) alignment is 8 bytes, and that every integer
+/// This assumes the platform's maximum (effective) alignment is 16 bytes, and that every integer
 /// with a size in bytes of a power of two has the same alignment as its size.
 </span><span class="kw">pub fn </span>get_integer_layout(width: u32) -&gt; Layout {
-    <span class="comment">// TODO: Fix integer layouts properly.
-    </span><span class="kw">if </span>width == <span class="number">248 </span>|| width == <span class="number">252 </span>|| width == <span class="number">256 </span>{
-        <span class="attr">#[cfg(target_arch = <span class="string">"x86_64"</span>)]
-        </span><span class="kw">return </span>Layout::from_size_align(<span class="number">32</span>, <span class="number">8</span>).unwrap();
-        <span class="attr">#[cfg(not(target_arch = <span class="string">"x86_64"</span>))]
-        </span><span class="kw">return </span>Layout::from_size_align(<span class="number">32</span>, <span class="number">16</span>).unwrap();
-    }
-
     <span class="kw">if </span>width == <span class="number">0 </span>{
         Layout::new::&lt;()&gt;()
     } <span class="kw">else if </span>width &lt;= <span class="number">8 </span>{
@@ -1184,9 +1136,17 @@
     } <span class="kw">else if </span>width &lt;= <span class="number">64 </span>{
         Layout::new::&lt;u64&gt;()
     } <span class="kw">else if </span>width &lt;= <span class="number">128 </span>{
-        Layout::new::&lt;u128&gt;()
+        <span class="attr">#[cfg(not(target_arch = <span class="string">"x86_64"</span>))]
+        </span>{
+            Layout::new::&lt;u128&gt;()
+        }
+        <span class="attr">#[cfg(target_arch = <span class="string">"x86_64"</span>)]
+        </span>{
+            Layout::new::&lt;u128&gt;().align_to(<span class="number">16</span>).unwrap()
+        }
     } <span class="kw">else </span>{
-        Layout::array::&lt;u64&gt;(next_multiple_of_u32(width, <span class="number">64</span>) <span class="kw">as </span>usize &gt;&gt; <span class="number">6</span>).unwrap()
+        <span class="kw">let </span>width = (width <span class="kw">as </span>usize).next_multiple_of(<span class="number">8</span>).next_power_of_two();
+        Layout::from_size_align(width &gt;&gt; <span class="number">3</span>, (width &gt;&gt; <span class="number">3</span>).min(<span class="number">16</span>)).unwrap()
     }
 }
 
@@ -1212,12 +1172,42 @@
         .into()
     } <span class="kw">else </span>{
         <span class="kw">let </span>source = std::fs::read_to_string(program).unwrap();
-        Arc::new(
-            cairo_lang_sierra::ProgramParser::new()
-                .parse(<span class="kw-2">&amp;</span>source)
-                .unwrap(),
-        )
+        cairo_lang_sierra::ProgramParser::new()
+            .parse(<span class="kw-2">&amp;</span>source)
+            .unwrap()
+            .into()
     }
+}
+
+<span class="kw">pub fn </span>cairo_to_sierra_with_debug_info&lt;<span class="lifetime">'ctx</span>&gt;(
+    context: <span class="kw-2">&amp;</span><span class="lifetime">'ctx </span>Context,
+    program: <span class="kw-2">&amp;</span>Path,
+) -&gt; <span class="prelude-ty">Result</span>&lt;(Program, DebugLocations&lt;<span class="lifetime">'ctx</span>&gt;), <span class="kw">crate</span>::error::Error&gt; {
+    <span class="kw">let </span><span class="kw-2">mut </span>db = RootDatabase::builder().detect_corelib().build().unwrap();
+    <span class="kw">let </span>main_crate_ids = setup_project(<span class="kw-2">&amp;mut </span>db, program).unwrap();
+    <span class="kw">let </span>program = compile_prepared_db(
+        <span class="kw-2">&amp;mut </span>db,
+        main_crate_ids,
+        CompilerConfig {
+            replace_ids: <span class="bool-val">true</span>,
+            ..Default::default()
+        },
+    )
+    .unwrap();
+
+    <span class="kw">let </span>debug_locations = {
+        <span class="kw">let </span>debug_info = DebugInfo::extract(<span class="kw-2">&amp;</span>db, <span class="kw-2">&amp;</span>program)
+            .map_err(|<span class="kw">_</span>| {
+                <span class="kw">let </span><span class="kw-2">mut </span>buffer = String::new();
+                <span class="macro">assert!</span>(DiagnosticsReporter::write_to_string(<span class="kw-2">&amp;mut </span>buffer).check(<span class="kw-2">&amp;</span>db));
+                buffer
+            })
+            .unwrap();
+
+        DebugLocations::extract(context, <span class="kw-2">&amp;</span>db, <span class="kw-2">&amp;</span>debug_info)
+    };
+
+    <span class="prelude-val">Ok</span>((program, debug_locations))
 }
 
 <span class="doccomment">/// Returns the given entry point if present.
@@ -1301,17 +1291,7 @@
     opt_level: OptLevel,
 ) -&gt; ExecutionEngine {
     <span class="comment">// Create the JIT engine.
-    </span><span class="kw">let </span>engine = ExecutionEngine::new(
-        module,
-        <span class="kw">match </span>opt_level {
-            OptLevel::None =&gt; <span class="number">0</span>,
-            OptLevel::Less =&gt; <span class="number">1</span>,
-            OptLevel::Default =&gt; <span class="number">2</span>,
-            OptLevel::Aggressive =&gt; <span class="number">3</span>,
-        },
-        <span class="kw-2">&amp;</span>[],
-        <span class="bool-val">false</span>,
-    );
+    </span><span class="kw">let </span>engine = ExecutionEngine::new(module, opt_level.into(), <span class="kw-2">&amp;</span>[], <span class="bool-val">false</span>);
 
     <span class="attr">#[cfg(feature = <span class="string">"with-runtime"</span>)]
     </span>register_runtime_symbols(<span class="kw-2">&amp;</span>engine);
@@ -1421,6 +1401,21 @@
                     NonNull&lt;std::ffi::c_void&gt;,
                 ) -&gt; <span class="kw-2">*mut </span>std::ffi::c_void <span class="kw">as </span><span class="kw-2">*mut </span>(),
         );
+
+        engine.register_symbol(
+            <span class="string">"cairo_native__dict_gas_refund"</span>,
+            cairo_native_runtime::cairo_native__dict_gas_refund
+                <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">fn</span>(<span class="kw-2">*const </span>std::ffi::c_void, NonNull&lt;std::ffi::c_void&gt;) -&gt; u64
+                <span class="kw">as </span><span class="kw-2">*mut </span>(),
+        );
+
+        <span class="attr">#[cfg(feature = <span class="string">"with-cheatcode"</span>)]
+        </span>{
+            engine.register_symbol(
+                <span class="string">"cairo_native__vtable_cheatcode"</span>,
+                <span class="kw">crate</span>::starknet::cairo_native__vtable_cheatcode <span class="kw">as </span><span class="kw-2">*mut </span>(),
+            );
+        }
     }
 }
 
@@ -1550,7 +1545,7 @@
         registry: <span class="kw-2">&amp;</span>ProgramRegistry&lt;CoreType, CoreLibfunc&gt;,
         metadata: <span class="kw-2">&amp;mut </span>MetadataStorage,
         id: <span class="kw-2">&amp;</span>ConcreteTypeId,
-    ) -&gt; <span class="prelude-ty">Result</span>&lt;Type&lt;<span class="lifetime">'ctx</span>&gt;, <span class="kw">super</span>::error::types::Error&gt;;
+    ) -&gt; <span class="prelude-ty">Result</span>&lt;Type&lt;<span class="lifetime">'ctx</span>&gt;, <span class="kw">super</span>::error::Error&gt;;
 
     <span class="kw">fn </span>build_type_with_layout&lt;<span class="lifetime">'ctx</span>&gt;(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
@@ -1559,7 +1554,7 @@
         registry: <span class="kw-2">&amp;</span>ProgramRegistry&lt;CoreType, CoreLibfunc&gt;,
         metadata: <span class="kw-2">&amp;mut </span>MetadataStorage,
         id: <span class="kw-2">&amp;</span>ConcreteTypeId,
-    ) -&gt; <span class="prelude-ty">Result</span>&lt;(Type&lt;<span class="lifetime">'ctx</span>&gt;, Layout), <span class="kw">super</span>::error::types::Error&gt;;
+    ) -&gt; <span class="prelude-ty">Result</span>&lt;(Type&lt;<span class="lifetime">'ctx</span>&gt;, Layout), <span class="kw">super</span>::error::Error&gt;;
 }
 
 <span class="kw">impl </span>ProgramRegistryExt <span class="kw">for </span>ProgramRegistry&lt;CoreType, CoreLibfunc&gt; {
@@ -1570,7 +1565,7 @@
         registry: <span class="kw-2">&amp;</span>ProgramRegistry&lt;CoreType, CoreLibfunc&gt;,
         metadata: <span class="kw-2">&amp;mut </span>MetadataStorage,
         id: <span class="kw-2">&amp;</span>ConcreteTypeId,
-    ) -&gt; <span class="prelude-ty">Result</span>&lt;Type&lt;<span class="lifetime">'ctx</span>&gt;, <span class="kw">super</span>::error::types::Error&gt; {
+    ) -&gt; <span class="prelude-ty">Result</span>&lt;Type&lt;<span class="lifetime">'ctx</span>&gt;, <span class="kw">super</span>::error::Error&gt; {
         registry
             .get_type(id)<span class="question-mark">?
             </span>.build(context, module, registry, metadata, id)
@@ -1583,7 +1578,7 @@
         registry: <span class="kw-2">&amp;</span>ProgramRegistry&lt;CoreType, CoreLibfunc&gt;,
         metadata: <span class="kw-2">&amp;mut </span>MetadataStorage,
         id: <span class="kw-2">&amp;</span>ConcreteTypeId,
-    ) -&gt; <span class="prelude-ty">Result</span>&lt;(Type&lt;<span class="lifetime">'ctx</span>&gt;, Layout), <span class="kw">super</span>::error::types::Error&gt; {
+    ) -&gt; <span class="prelude-ty">Result</span>&lt;(Type&lt;<span class="lifetime">'ctx</span>&gt;, Layout), <span class="kw">super</span>::error::Error&gt; {
         <span class="kw">let </span>concrete_type = registry.get_type(id)<span class="question-mark">?</span>;
 
         <span class="prelude-val">Ok</span>((
@@ -1593,147 +1588,11 @@
     }
 }
 
-<span class="doccomment">/// The `mlir_asm!` macro is a shortcut to manually building operations.
-///
-/// It works by forwarding the custom DSL code to their respective functions within melior's
-/// `OperationBuilder`.
-///
-/// The DSL's syntax is similar to that of MLIR, but has some differences, or rather restrictions,
-/// due to the way declarative macros work:
-///   - All macro invocations need the MLIR context, the target block and the operations' locations.
-///   - The operations are defined using a syntax similar to that of MLIR's generic operations, with
-///     some differences. The results are Rust variables (MLIR values) and the inputs (operands,
-///     attributes...) are all Rust expressions that evaluate to their respective type.
-///
-/// Check out the [felt252 libfunc implementations](crate::libfuncs::felt252) for an example on their usage.
-</span><span class="macro">macro_rules! </span>mlir_asm {
-    (
-        <span class="macro-nonterminal">$context</span>:expr, <span class="macro-nonterminal">$block</span>:expr, <span class="macro-nonterminal">$location</span>:expr =&gt;
-            $( ; $( $( <span class="macro-nonterminal">$ret</span>:ident ),+ = )<span class="question-mark">? </span><span class="macro-nonterminal">$op</span>:literal
-                ( $( $( <span class="macro-nonterminal">$arg</span>:expr ),+ $(,)<span class="question-mark">? </span>)<span class="question-mark">? </span>) <span class="comment">// Operands.
-                </span>$( [ $( $( ^ <span class="macro-nonterminal">$successor</span>:ident $( ( $( $( <span class="macro-nonterminal">$successor_arg</span>:expr ),+ $(,)<span class="question-mark">? </span>)<span class="question-mark">? </span>) )<span class="question-mark">? </span>),+ $(,)<span class="question-mark">? </span>)<span class="question-mark">? </span>] )<span class="question-mark">? </span><span class="comment">// Successors.
-                </span>$( &lt; { $( $( <span class="macro-nonterminal">$prop_name</span>:pat_param = <span class="macro-nonterminal">$prop_value</span>:expr ),+ $(,)<span class="question-mark">? </span>)<span class="question-mark">? </span>} &gt; )<span class="question-mark">? </span><span class="comment">// Properties.
-                </span>$( ( $( $( <span class="macro-nonterminal">$region</span>:expr ),+ $(,)<span class="question-mark">? </span>)<span class="question-mark">? </span>) )<span class="question-mark">? </span><span class="comment">// Regions.
-                </span>$( { $( $( <span class="macro-nonterminal">$attr_name</span>:literal = <span class="macro-nonterminal">$attr_value</span>:expr ),+ $(,)<span class="question-mark">? </span>)<span class="question-mark">? </span>} )<span class="question-mark">? </span><span class="comment">// Attributes.
-                </span>: <span class="macro-nonterminal">$args_ty</span>:tt -&gt; <span class="macro-nonterminal">$rets_ty</span>:tt <span class="comment">// Signature.
-            </span>)*
-    ) =&gt; { $(
-        <span class="attr">#[allow(unused_mut)]
-        </span>$( <span class="kw">let </span><span class="macro-nonterminal">$</span><span class="macro">crate::utils::codegen_ret_decl!</span>($(<span class="macro-nonterminal">$ret</span>),+) = )<span class="question-mark">? </span>{
-            <span class="attr">#[allow(unused_variables)]
-            </span><span class="kw">let </span>context = <span class="macro-nonterminal">$context</span>;
-            <span class="kw">let </span><span class="kw-2">mut </span>builder = melior::ir::operation::OperationBuilder::new(<span class="macro-nonterminal">$op</span>, <span class="macro-nonterminal">$location</span>);
-
-            <span class="comment">// Process operands.
-            </span>$( <span class="kw">let </span>builder = builder.add_operands(<span class="kw-2">&amp;</span>[$( <span class="macro-nonterminal">$arg</span>, )+]); )<span class="question-mark">?
-
-            </span><span class="comment">// TODO: Process successors.
-            // TODO: Process properties.
-            // TODO: Process regions.
-
-            // Process attributes.
-            </span>$( $(
-                <span class="kw">let </span>builder = <span class="macro-nonterminal">$</span><span class="macro">crate::utils::codegen_attributes!</span>(<span class="macro-nonterminal">context</span>, builder =&gt; $(<span class="macro-nonterminal">$attr_name </span>= <span class="macro-nonterminal">$attr_value</span>),+);
-            )<span class="question-mark">? </span>)<span class="question-mark">?
-
-            </span><span class="comment">// Process signature.
-            // #[cfg(debug_assertions)]
-            // $crate::utils::codegen_signature!( PARAMS $args_ty );
-            </span><span class="kw">let </span>builder = <span class="macro-nonterminal">$</span><span class="macro">crate::utils::codegen_signature!</span>( <span class="macro-nonterminal">RETS </span>builder =&gt; <span class="macro-nonterminal">$rets_ty </span>);
-
-            <span class="attr">#[allow(unused_variables)]
-            </span><span class="kw">let </span>op = <span class="macro-nonterminal">$block</span>.append_operation(builder.build()<span class="question-mark">?</span>);
-            $( <span class="macro-nonterminal">$</span><span class="macro">crate::utils::codegen_ret_extr!</span>(<span class="macro-nonterminal">op </span>=&gt; $(<span class="macro-nonterminal">$ret</span>),+) )<span class="question-mark">?
-        </span>};
-    )* };
-}
-<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">use </span>mlir_asm;
-
-<span class="macro">macro_rules! </span>codegen_attributes {
-    <span class="comment">// Macro entry points.
-    </span>( <span class="macro-nonterminal">$context</span>:ident, <span class="macro-nonterminal">$builder</span>:ident =&gt; <span class="macro-nonterminal">$name</span>:literal = <span class="macro-nonterminal">$value</span>:expr ) =&gt; {
-        <span class="macro-nonterminal">$builder</span>.add_attributes(<span class="kw-2">&amp;</span>[
-            <span class="macro-nonterminal">$</span><span class="macro">crate::utils::codegen_attributes!</span>(<span class="macro-nonterminal">INTERNAL $context</span>, <span class="macro-nonterminal">$builder </span>=&gt; <span class="macro-nonterminal">$name </span>= <span class="macro-nonterminal">$value</span>),
-        ])
-    };
-    ( <span class="macro-nonterminal">$context</span>:ident, <span class="macro-nonterminal">$builder</span>:ident =&gt; $( <span class="macro-nonterminal">$name</span>:literal = <span class="macro-nonterminal">$value</span>:expr ),+ ) =&gt; {
-        <span class="macro-nonterminal">$builder</span>.add_attributes(<span class="kw-2">&amp;</span>[
-            $( <span class="macro-nonterminal">$</span><span class="macro">crate::utils::codegen_attributes!</span>(<span class="macro-nonterminal">INTERNAL $context</span>, <span class="macro-nonterminal">$builder </span>=&gt; <span class="macro-nonterminal">$name </span>= <span class="macro-nonterminal">$value</span>), )+
-        ])
-    };
-
-    ( INTERNAL <span class="macro-nonterminal">$context</span>:ident, <span class="macro-nonterminal">$builder</span>:ident =&gt; <span class="macro-nonterminal">$name</span>:literal = <span class="macro-nonterminal">$value</span>:expr ) =&gt; {
-        (
-            melior::ir::Identifier::new(<span class="macro-nonterminal">$context</span>, <span class="macro-nonterminal">$name</span>),
-            <span class="macro-nonterminal">$value</span>,
-        )
-    };
-}
-<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">use </span>codegen_attributes;
-
-<span class="macro">macro_rules! </span>codegen_signature {
-    ( PARAMS ) =&gt; {
-        <span class="comment">// TODO: Check operand types.
-    </span>};
-
-    ( RETS <span class="macro-nonterminal">$builder</span>:ident =&gt; () ) =&gt; { <span class="macro-nonterminal">$builder </span>};
-    ( RETS <span class="macro-nonterminal">$builder</span>:ident =&gt; <span class="macro-nonterminal">$ret_ty</span>:expr ) =&gt; {
-        <span class="macro-nonterminal">$builder</span>.add_results(<span class="kw-2">&amp;</span>[<span class="macro-nonterminal">$ret_ty</span>])
-    };
-    ( RETS <span class="macro-nonterminal">$builder</span>:ident =&gt; $( <span class="macro-nonterminal">$ret_ty</span>:expr ),+ $(,)<span class="question-mark">? </span>) =&gt; {
-        <span class="macro-nonterminal">$builder</span>.add_results(<span class="kw-2">&amp;</span>[$(<span class="macro-nonterminal">$ret_ty</span>),+])
-    };
-}
-<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">use </span>codegen_signature;
-
-<span class="macro">macro_rules! </span>codegen_ret_decl {
-    <span class="comment">// Macro entry points.
-    </span>( <span class="macro-nonterminal">$ret</span>:ident ) =&gt; { <span class="macro-nonterminal">$ret </span>};
-    ( $( <span class="macro-nonterminal">$ret</span>:ident ),+ ) =&gt; {
-        ( $( <span class="macro">codegen_ret_decl!</span>(<span class="macro-nonterminal">$ret</span>) ),+ )
-    };
-}
-<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">use </span>codegen_ret_decl;
-
-<span class="macro">macro_rules! </span>codegen_ret_extr {
-    <span class="comment">// Macro entry points.
-    </span>( <span class="macro-nonterminal">$op</span>:ident =&gt; <span class="macro-nonterminal">$ret</span>:ident ) =&gt; {{
-        melior::ir::Value::from(<span class="macro-nonterminal">$op</span>.result(<span class="number">0</span>)<span class="question-mark">?</span>)
-    }};
-    ( <span class="macro-nonterminal">$op</span>:ident =&gt; $( <span class="macro-nonterminal">$ret</span>:ident ),+ ) =&gt; {{
-        <span class="kw">let </span><span class="kw-2">mut </span>idx = <span class="number">0</span>;
-        ( $( <span class="macro">codegen_ret_extr!</span>(INTERNAL idx, <span class="macro-nonterminal">$op </span>=&gt; <span class="macro-nonterminal">$ret</span>) ),+ )
-    }};
-
-    <span class="comment">// Internal entry points.
-    </span>( INTERNAL <span class="macro-nonterminal">$count</span>:ident, <span class="macro-nonterminal">$op</span>:ident =&gt; <span class="macro-nonterminal">$ret</span>:ident ) =&gt; {
-        {
-            <span class="kw">let </span>idx = <span class="macro-nonterminal">$count</span>;
-            <span class="macro-nonterminal">$count </span>+= <span class="number">1</span>;
-            melior::ir::Value::from(<span class="macro-nonterminal">$op</span>.result(idx)<span class="question-mark">?</span>)
-        }
-    };
-}
-<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">use </span>codegen_ret_extr;
-
 <span class="attr">#[cfg(test)]
 </span><span class="kw">pub mod </span>test {
     <span class="kw">use crate</span>::{
-        execution_result::ExecutionResult,
-        executor::JitNativeExecutor,
-        metadata::{
-            gas::{GasMetadata, MetadataComputationConfig},
-            runtime_bindings::RuntimeBindingsMeta,
-            syscall_handler::SyscallHandlerMeta,
-            MetadataStorage,
-        },
-        module::NativeModule,
-        starknet::{
-            BlockInfo, ExecutionInfo, ExecutionInfoV2, ResourceBounds, StarkNetSyscallHandler,
-            SyscallResult, TxInfo, TxV2Info, U256,
-        },
-        utils::<span class="kw-2">*</span>,
-        values::JitValue,
+        context::NativeContext, execution_result::ExecutionResult, executor::JitNativeExecutor,
+        starknet_stub::StubSyscallHandler, utils::<span class="kw-2">*</span>, values::JitValue,
     };
     <span class="kw">use </span>cairo_lang_compiler::{
         compile_prepared_db, db::RootDatabase, diagnostics::DiagnosticsReporter,
@@ -1741,29 +1600,30 @@
     };
     <span class="kw">use </span>cairo_lang_filesystem::db::init_dev_corelib;
     <span class="kw">use </span>cairo_lang_sierra::{
-        extensions::core::{CoreLibfunc, CoreType},
+        ids::FunctionId,
         program::Program,
-        program_registry::ProgramRegistry,
+        program::{FunctionSignature, GenFunction, StatementIdx},
     };
-    <span class="kw">use </span>melior::{
-        dialect::DialectRegistry,
-        ir::{Location, Module},
-        utility::{register_all_dialects, register_all_passes},
-        Context,
-    };
+    <span class="kw">use </span>cairo_lang_starknet::starknet_plugin_suite;
     <span class="kw">use </span>pretty_assertions_sorted::assert_eq;
-    <span class="kw">use </span>starknet_types_core::felt::Felt;
-    <span class="kw">use </span>std::{env::var, fs, path::Path};
+    <span class="kw">use </span>std::io::Write;
+    <span class="kw">use </span>std::{env::var, fmt::Formatter, fs, path::Path};
 
-    <span class="macro">macro_rules! </span>load_cairo {
+    <span class="macro">macro_rules!</span> load_cairo {
         ( $( <span class="macro-nonterminal">$program</span>:tt )+ ) =&gt; {
             <span class="macro-nonterminal">$crate::utils::test::load_cairo_str</span>(<span class="macro">stringify!</span>($(<span class="macro-nonterminal">$program</span>)+))
         };
     }
+    <span class="macro">macro_rules!</span> load_starknet {
+        ( $( <span class="macro-nonterminal">$program</span>:tt )+ ) =&gt; {
+            <span class="macro-nonterminal">$crate::utils::test::load_starknet_str</span>(<span class="macro">stringify!</span>($(<span class="macro-nonterminal">$program</span>)+))
+        };
+    }
     <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">use </span>load_cairo;
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">use </span>load_starknet;
 
     <span class="comment">// Helper macros for faster testing.
-    </span><span class="macro">macro_rules! </span>jit_struct {
+    </span><span class="macro">macro_rules!</span> jit_struct {
         ( $(<span class="macro-nonterminal">$x</span>:expr),* $(,)<span class="question-mark">? </span>) =&gt; {
             <span class="kw">crate</span>::values::JitValue::Struct {
                 fields: <span class="macro">vec!</span>[$(<span class="macro-nonterminal">$x</span>), <span class="kw-2">*</span>],
@@ -1771,7 +1631,7 @@
             </span>}
         };
     }
-    <span class="macro">macro_rules! </span>jit_enum {
+    <span class="macro">macro_rules!</span> jit_enum {
         ( <span class="macro-nonterminal">$tag</span>:expr, <span class="macro-nonterminal">$value</span>:expr ) =&gt; {
             <span class="kw">crate</span>::values::JitValue::Enum {
                 tag: <span class="macro-nonterminal">$tag</span>,
@@ -1780,7 +1640,7 @@
             }
         };
     }
-    <span class="macro">macro_rules! </span>jit_dict {
+    <span class="macro">macro_rules!</span> jit_dict {
         ( $(<span class="macro-nonterminal">$key</span>:expr $(=&gt;)+ <span class="macro-nonterminal">$value</span>:expr),* $(,)<span class="question-mark">? </span>) =&gt; {
             <span class="kw">crate</span>::values::JitValue::Felt252Dict {
                 value: {
@@ -1792,7 +1652,7 @@
             }
         };
     }
-    <span class="macro">macro_rules! </span>jit_panic {
+    <span class="macro">macro_rules!</span> jit_panic {
         ( $(<span class="macro-nonterminal">$value</span>:expr)<span class="question-mark">? </span>) =&gt; {
             <span class="macro">crate::utils::test::jit_enum!</span>(<span class="number">1</span>, <span class="macro">crate::utils::test::jit_struct!</span>(
                 <span class="macro">crate::utils::test::jit_struct!</span>(),
@@ -1805,7 +1665,21 @@
     <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">use </span>jit_panic;
     <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">use </span>jit_struct;
 
-    <span class="kw">pub fn </span>load_cairo_str(program_str: <span class="kw-2">&amp;</span>str) -&gt; (String, Program) {
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>load_cairo_str(program_str: <span class="kw-2">&amp;</span>str) -&gt; (String, Program) {
+        compile_program(program_str, RootDatabase::default())
+    }
+
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>load_starknet_str(program_str: <span class="kw-2">&amp;</span>str) -&gt; (String, Program) {
+        compile_program(
+            program_str,
+            RootDatabase::builder()
+                .with_plugin_suite(starknet_plugin_suite())
+                .build()
+                .unwrap(),
+        )
+    }
+
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>compile_program(program_str: <span class="kw-2">&amp;</span>str, <span class="kw-2">mut </span>db: RootDatabase) -&gt; (String, Program) {
         <span class="kw">let </span><span class="kw-2">mut </span>program_file = tempfile::Builder::new()
             .prefix(<span class="string">"test_"</span>)
             .suffix(<span class="string">".cairo"</span>)
@@ -1813,7 +1687,6 @@
             .unwrap();
         fs::write(<span class="kw-2">&amp;mut </span>program_file, program_str).unwrap();
 
-        <span class="kw">let </span><span class="kw-2">mut </span>db = RootDatabase::default();
         init_dev_corelib(
             <span class="kw-2">&amp;mut </span>db,
             Path::new(<span class="kw-2">&amp;</span>var(<span class="string">"CARGO_MANIFEST_DIR"</span>).unwrap()).join(<span class="string">"corelib/src"</span>),
@@ -1843,9 +1716,6 @@
         <span class="kw">let </span>entry_point = <span class="macro">format!</span>(<span class="string">"{0}::{0}::{1}"</span>, program.<span class="number">0</span>, entry_point);
         <span class="kw">let </span>program = <span class="kw-2">&amp;</span>program.<span class="number">1</span>;
 
-        <span class="kw">let </span>registry = ProgramRegistry::&lt;CoreType, CoreLibfunc&gt;::new(program)
-            .expect(<span class="string">"Could not create the test program registry."</span>);
-
         <span class="kw">let </span>entry_point_id = <span class="kw-2">&amp;</span>program
             .funcs
             .iter()
@@ -1853,60 +1723,20 @@
             .expect(<span class="string">"Test program entry point not found."</span>)
             .id;
 
-        <span class="kw">let </span>context = Context::new();
-        context.append_dialect_registry(<span class="kw-2">&amp;</span>{
-            <span class="kw">let </span>registry = DialectRegistry::new();
-            register_all_dialects(<span class="kw-2">&amp;</span>registry);
-            registry
-        });
-        context.load_all_available_dialects();
-        register_all_passes();
+        <span class="kw">let </span>context = NativeContext::new();
 
-        <span class="kw">let </span><span class="kw-2">mut </span>module = Module::new(Location::unknown(<span class="kw-2">&amp;</span>context));
-        <span class="kw">let </span><span class="kw-2">mut </span>metadata = MetadataStorage::new();
-
-        <span class="comment">// Make the runtime library and syscall handler available.
-        </span>metadata.insert(RuntimeBindingsMeta::default()).unwrap();
-        metadata
-            .insert(SyscallHandlerMeta::new(<span class="kw-2">&amp;mut </span>TestSyscallHandler))
-            .unwrap();
-
-        <span class="kw">if </span>program
-            .type_declarations
-            .iter()
-            .any(|decl| decl.long_id.generic_id.<span class="number">0 </span>== <span class="string">"GasBuiltin"</span>)
-        {
-            <span class="kw">let </span>gas_metadata =
-                GasMetadata::new(program, <span class="prelude-val">Some</span>(MetadataComputationConfig::default())).unwrap();
-            metadata.insert(gas_metadata);
-        } <span class="kw">else </span>{
-            <span class="kw">let </span>gas_metadata = GasMetadata::new(program, <span class="prelude-val">None</span>).unwrap();
-            metadata.insert(gas_metadata);
-        }
-
-        <span class="kw">crate</span>::compile(<span class="kw-2">&amp;</span>context, <span class="kw-2">&amp;</span>module, program, <span class="kw-2">&amp;</span>registry, <span class="kw-2">&amp;mut </span>metadata, <span class="prelude-val">None</span>)
+        <span class="kw">let </span>module = context
+            .compile(program, <span class="prelude-val">None</span>)
             .expect(<span class="string">"Could not compile test program to MLIR."</span>);
 
-        <span class="macro">assert!</span>(
-            module.as_operation().verify(),
-            <span class="string">"Test program generated invalid MLIR:\n{}"</span>,
-            module.as_operation()
-        );
-
-        run_pass_manager(<span class="kw-2">&amp;</span>context, <span class="kw-2">&amp;mut </span>module)
-            .expect(<span class="string">"Could not apply passes to the compiled test program."</span>);
-
-        <span class="kw">let </span>syscall_handler = metadata.remove::&lt;SyscallHandlerMeta&gt;();
-
-        <span class="kw">let </span>native_module = NativeModule::new(module, registry, metadata);
         <span class="comment">// FIXME: There are some bugs with non-zero LLVM optimization levels.
-        </span><span class="kw">let </span>executor = JitNativeExecutor::from_native_module(native_module, OptLevel::None);
+        </span><span class="kw">let </span>executor = JitNativeExecutor::from_native_module(module, OptLevel::None);
         executor
-            .invoke_dynamic(
+            .invoke_dynamic_with_syscall_handler(
                 entry_point_id,
                 args,
                 <span class="prelude-val">Some</span>(u128::MAX),
-                syscall_handler.as_ref(),
+                <span class="kw-2">&amp;mut </span>StubSyscallHandler::default(),
             )
             .unwrap()
     }
@@ -1922,7 +1752,10 @@
         <span class="macro">assert_eq!</span>(result.return_value, output);
     }
 
-    <span class="doccomment">/// Ensures that the host's `u8` is compatible with its compiled counterpart.
+    <span class="comment">// ==============================
+    // == TESTS: get_integer_layout
+    // ==============================
+    </span><span class="doccomment">/// Ensures that the host's `u8` is compatible with its compiled counterpart.
     </span><span class="attr">#[test]
     </span><span class="kw">fn </span>test_alignment_compatibility_u8() {
         <span class="macro">assert_eq!</span>(get_integer_layout(<span class="number">8</span>).align(), <span class="number">1</span>);
@@ -1948,15 +1781,12 @@
 
     <span class="doccomment">/// Ensures that the host's `u128` is compatible with its compiled counterpart.
     </span><span class="attr">#[test]
-    #[ignore]
     </span><span class="kw">fn </span>test_alignment_compatibility_u128() {
-        <span class="comment">// FIXME: Uncomment once LLVM fixes its u128 alignment issues.
-        </span><span class="macro">assert_eq!</span>(get_integer_layout(<span class="number">128</span>).align(), <span class="number">16</span>);
+        <span class="macro">assert_eq!</span>(get_integer_layout(<span class="number">128</span>).align(), <span class="number">16</span>);
     }
 
     <span class="doccomment">/// Ensures that the host's `u256` is compatible with its compiled counterpart.
     </span><span class="attr">#[test]
-    #[ignore]
     </span><span class="kw">fn </span>test_alignment_compatibility_u256() {
         <span class="macro">assert_eq!</span>(get_integer_layout(<span class="number">256</span>).align(), <span class="number">16</span>);
     }
@@ -1964,261 +1794,344 @@
     <span class="doccomment">/// Ensures that the host's `u512` is compatible with its compiled counterpart.
     </span><span class="attr">#[test]
     </span><span class="kw">fn </span>test_alignment_compatibility_u512() {
-        <span class="macro">assert_eq!</span>(get_integer_layout(<span class="number">512</span>).align(), <span class="number">8</span>);
+        <span class="macro">assert_eq!</span>(get_integer_layout(<span class="number">512</span>).align(), <span class="number">16</span>);
     }
 
     <span class="doccomment">/// Ensures that the host's `Felt` is compatible with its compiled counterpart.
     </span><span class="attr">#[test]
-    #[ignore]
     </span><span class="kw">fn </span>test_alignment_compatibility_felt() {
-        <span class="macro">assert_eq!</span>(get_integer_layout(<span class="number">252</span>).align(), <span class="number">8</span>);
+        <span class="macro">assert_eq!</span>(get_integer_layout(<span class="number">252</span>).align(), <span class="number">16</span>);
     }
 
-    <span class="attr">#[derive(Debug)]
-    </span><span class="kw">struct </span>TestSyscallHandler;
+    <span class="comment">// ==============================
+    // == TESTS: find_entry_point
+    // ==============================
+    </span><span class="attr">#[test]
+    </span><span class="kw">fn </span>test_find_entry_point_with_empty_program() {
+        <span class="kw">let </span>program = Program {
+            type_declarations: <span class="macro">vec!</span>[],
+            libfunc_declarations: <span class="macro">vec!</span>[],
+            statements: <span class="macro">vec!</span>[],
+            funcs: <span class="macro">vec!</span>[],
+        };
+        <span class="kw">let </span>entry_point = find_entry_point(<span class="kw-2">&amp;</span>program, <span class="string">"entry_point"</span>);
+        <span class="macro">assert!</span>(entry_point.is_none());
+    }
 
-    <span class="kw">impl </span>StarkNetSyscallHandler <span class="kw">for </span>TestSyscallHandler {
-        <span class="kw">fn </span>get_block_hash(<span class="kw-2">&amp;mut </span><span class="self">self</span>, _block_number: u64, _gas: <span class="kw-2">&amp;mut </span>u128) -&gt; SyscallResult&lt;Felt&gt; {
-            <span class="prelude-val">Ok</span>(Felt::from_bytes_be_slice(<span class="string">b"get_block_hash ok"</span>))
-        }
-
-        <span class="kw">fn </span>get_execution_info(
-            <span class="kw-2">&amp;mut </span><span class="self">self</span>,
-            _gas: <span class="kw-2">&amp;mut </span>u128,
-        ) -&gt; SyscallResult&lt;<span class="kw">crate</span>::starknet::ExecutionInfo&gt; {
-            <span class="prelude-val">Ok</span>(ExecutionInfo {
-                block_info: BlockInfo {
-                    block_number: <span class="number">1234</span>,
-                    block_timestamp: <span class="number">2345</span>,
-                    sequencer_address: <span class="number">3456</span>.into(),
+    <span class="attr">#[test]
+    </span><span class="kw">fn </span>test_entry_point_not_found() {
+        <span class="kw">let </span>program = Program {
+            type_declarations: <span class="macro">vec!</span>[],
+            libfunc_declarations: <span class="macro">vec!</span>[],
+            statements: <span class="macro">vec!</span>[],
+            funcs: <span class="macro">vec!</span>[GenFunction {
+                id: FunctionId {
+                    id: <span class="number">0</span>,
+                    debug_name: <span class="prelude-val">Some</span>(<span class="string">"not_entry_point"</span>.into()),
                 },
-                tx_info: TxInfo {
-                    version: <span class="number">4567</span>.into(),
-                    account_contract_address: <span class="number">5678</span>.into(),
-                    max_fee: <span class="number">6789</span>,
-                    signature: <span class="macro">vec!</span>[<span class="number">1248</span>.into(), <span class="number">2486</span>.into()],
-                    transaction_hash: <span class="number">9876</span>.into(),
-                    chain_id: <span class="number">8765</span>.into(),
-                    nonce: <span class="number">7654</span>.into(),
+                signature: FunctionSignature {
+                    ret_types: <span class="macro">vec!</span>[],
+                    param_types: <span class="macro">vec!</span>[],
                 },
-                caller_address: <span class="number">6543</span>.into(),
-                contract_address: <span class="number">5432</span>.into(),
-                entry_point_selector: <span class="number">4321</span>.into(),
-            })
-        }
+                params: <span class="macro">vec!</span>[],
+                entry_point: StatementIdx(<span class="number">0</span>),
+            }],
+        };
+        <span class="kw">let </span>entry_point = find_entry_point(<span class="kw-2">&amp;</span>program, <span class="string">"entry_point"</span>);
+        <span class="macro">assert!</span>(entry_point.is_none());
+    }
 
-        <span class="kw">fn </span>get_execution_info_v2(
-            <span class="kw-2">&amp;mut </span><span class="self">self</span>,
-            _remaining_gas: <span class="kw-2">&amp;mut </span>u128,
-        ) -&gt; SyscallResult&lt;<span class="kw">crate</span>::starknet::ExecutionInfoV2&gt; {
-            <span class="prelude-val">Ok</span>(ExecutionInfoV2 {
-                block_info: BlockInfo {
-                    block_number: <span class="number">1234</span>,
-                    block_timestamp: <span class="number">2345</span>,
-                    sequencer_address: <span class="number">3456</span>.into(),
+    <span class="attr">#[test]
+    </span><span class="kw">fn </span>test_entry_point_found() {
+        <span class="kw">let </span>program = Program {
+            type_declarations: <span class="macro">vec!</span>[],
+            libfunc_declarations: <span class="macro">vec!</span>[],
+            statements: <span class="macro">vec!</span>[],
+            funcs: <span class="macro">vec!</span>[GenFunction {
+                id: FunctionId {
+                    id: <span class="number">0</span>,
+                    debug_name: <span class="prelude-val">Some</span>(<span class="string">"entry_point"</span>.into()),
                 },
-                tx_info: TxV2Info {
-                    version: <span class="number">1</span>.into(),
-                    account_contract_address: <span class="number">1</span>.into(),
-                    max_fee: <span class="number">0</span>,
-                    signature: <span class="macro">vec!</span>[<span class="number">1</span>.into()],
-                    transaction_hash: <span class="number">1</span>.into(),
-                    chain_id: <span class="number">1</span>.into(),
-                    nonce: <span class="number">1</span>.into(),
-                    tip: <span class="number">1</span>,
-                    paymaster_data: <span class="macro">vec!</span>[<span class="number">1</span>.into()],
-                    nonce_data_availability_mode: <span class="number">0</span>,
-                    fee_data_availability_mode: <span class="number">0</span>,
-                    account_deployment_data: <span class="macro">vec!</span>[<span class="number">1</span>.into()],
-                    resource_bounds: <span class="macro">vec!</span>[ResourceBounds {
-                        resource: <span class="number">2</span>.into(),
-                        max_amount: <span class="number">10</span>,
-                        max_price_per_unit: <span class="number">20</span>,
-                    }],
+                signature: FunctionSignature {
+                    ret_types: <span class="macro">vec!</span>[],
+                    param_types: <span class="macro">vec!</span>[],
                 },
-                caller_address: <span class="number">6543</span>.into(),
-                contract_address: <span class="number">5432</span>.into(),
-                entry_point_selector: <span class="number">4321</span>.into(),
-            })
-        }
+                params: <span class="macro">vec!</span>[],
+                entry_point: StatementIdx(<span class="number">0</span>),
+            }],
+        };
+        <span class="kw">let </span>entry_point = find_entry_point(<span class="kw-2">&amp;</span>program, <span class="string">"entry_point"</span>);
+        <span class="macro">assert!</span>(entry_point.is_some());
+        <span class="macro">assert_eq!</span>(entry_point.unwrap().id.id, <span class="number">0</span>);
+    }
 
-        <span class="kw">fn </span>deploy(
-            <span class="kw-2">&amp;mut </span><span class="self">self</span>,
-            class_hash: Felt,
-            contract_address_salt: Felt,
-            calldata: <span class="kw-2">&amp;</span>[Felt],
-            _deploy_from_zero: bool,
-            _gas: <span class="kw-2">&amp;mut </span>u128,
-        ) -&gt; SyscallResult&lt;(Felt, Vec&lt;Felt&gt;)&gt; {
-            <span class="prelude-val">Ok</span>((
-                class_hash + contract_address_salt,
-                calldata.iter().map(|x| x + Felt::from(<span class="number">1</span>)).collect(),
-            ))
-        }
+    <span class="comment">// ====================================
+    // == TESTS: find_entry_point_by_idx
+    // ====================================
+    </span><span class="attr">#[test]
+    </span><span class="kw">fn </span>test_find_entry_point_by_idx_with_empty_program() {
+        <span class="kw">let </span>program = Program {
+            type_declarations: <span class="macro">vec!</span>[],
+            libfunc_declarations: <span class="macro">vec!</span>[],
+            statements: <span class="macro">vec!</span>[],
+            funcs: <span class="macro">vec!</span>[],
+        };
+        <span class="kw">let </span>entry_point = find_entry_point_by_idx(<span class="kw-2">&amp;</span>program, <span class="number">0</span>);
+        <span class="macro">assert!</span>(entry_point.is_none());
+    }
 
-        <span class="kw">fn </span>replace_class(<span class="kw-2">&amp;mut </span><span class="self">self</span>, _class_hash: Felt, _gas: <span class="kw-2">&amp;mut </span>u128) -&gt; SyscallResult&lt;()&gt; {
-            <span class="prelude-val">Ok</span>(())
-        }
+    <span class="attr">#[test]
+    </span><span class="kw">fn </span>test_entry_point_not_found_by_id() {
+        <span class="kw">let </span>program = Program {
+            type_declarations: <span class="macro">vec!</span>[],
+            libfunc_declarations: <span class="macro">vec!</span>[],
+            statements: <span class="macro">vec!</span>[],
+            funcs: <span class="macro">vec!</span>[GenFunction {
+                id: FunctionId {
+                    id: <span class="number">0</span>,
+                    debug_name: <span class="prelude-val">Some</span>(<span class="string">"some_name"</span>.into()),
+                },
+                signature: FunctionSignature {
+                    ret_types: <span class="macro">vec!</span>[],
+                    param_types: <span class="macro">vec!</span>[],
+                },
+                params: <span class="macro">vec!</span>[],
+                entry_point: StatementIdx(<span class="number">0</span>),
+            }],
+        };
+        <span class="kw">let </span>entry_point = find_entry_point_by_idx(<span class="kw-2">&amp;</span>program, <span class="number">1</span>);
+        <span class="macro">assert!</span>(entry_point.is_none());
+    }
 
-        <span class="kw">fn </span>library_call(
-            <span class="kw-2">&amp;mut </span><span class="self">self</span>,
-            _class_hash: Felt,
-            _function_selector: Felt,
-            calldata: <span class="kw-2">&amp;</span>[Felt],
-            _gas: <span class="kw-2">&amp;mut </span>u128,
-        ) -&gt; SyscallResult&lt;Vec&lt;Felt&gt;&gt; {
-            <span class="prelude-val">Ok</span>(calldata.iter().map(|x| x * Felt::from(<span class="number">3</span>)).collect())
-        }
+    <span class="attr">#[test]
+    </span><span class="kw">fn </span>test_entry_point_found_by_id() {
+        <span class="kw">let </span>program = Program {
+            type_declarations: <span class="macro">vec!</span>[],
+            libfunc_declarations: <span class="macro">vec!</span>[],
+            statements: <span class="macro">vec!</span>[],
+            funcs: <span class="macro">vec!</span>[GenFunction {
+                id: FunctionId {
+                    id: <span class="number">15</span>,
+                    debug_name: <span class="prelude-val">Some</span>(<span class="string">"some_name"</span>.into()),
+                },
+                signature: FunctionSignature {
+                    ret_types: <span class="macro">vec!</span>[],
+                    param_types: <span class="macro">vec!</span>[],
+                },
+                params: <span class="macro">vec!</span>[],
+                entry_point: StatementIdx(<span class="number">0</span>),
+            }],
+        };
+        <span class="kw">let </span>entry_point = find_entry_point_by_idx(<span class="kw-2">&amp;</span>program, <span class="number">15</span>);
+        <span class="macro">assert!</span>(entry_point.is_some());
+        <span class="macro">assert_eq!</span>(entry_point.unwrap().id.id, <span class="number">15</span>);
+    }
 
-        <span class="kw">fn </span>call_contract(
-            <span class="kw-2">&amp;mut </span><span class="self">self</span>,
-            _address: Felt,
-            _entry_point_selector: Felt,
-            calldata: <span class="kw-2">&amp;</span>[Felt],
-            _gas: <span class="kw-2">&amp;mut </span>u128,
-        ) -&gt; SyscallResult&lt;Vec&lt;Felt&gt;&gt; {
-            <span class="prelude-val">Ok</span>(calldata.iter().map(|x| x * Felt::from(<span class="number">3</span>)).collect())
-        }
+    <span class="comment">// ==============================
+    // == TESTS: felt252_str
+    // ==============================
+    </span><span class="attr">#[test]
+    #[should_panic(expected = <span class="string">"value must be a digit number"</span>)]
+    </span><span class="kw">fn </span>test_felt252_str_invalid_input() {
+        <span class="kw">let </span>value = <span class="string">"not_a_number"</span>;
+        felt252_str(value);
+    }
 
-        <span class="kw">fn </span>storage_read(
-            <span class="kw-2">&amp;mut </span><span class="self">self</span>,
-            _address_domain: u32,
-            address: Felt,
-            _gas: <span class="kw-2">&amp;mut </span>u128,
-        ) -&gt; SyscallResult&lt;Felt&gt; {
-            <span class="prelude-val">Ok</span>(address * Felt::from(<span class="number">3</span>))
-        }
+    <span class="attr">#[test]
+    </span><span class="kw">fn </span>test_felt252_str_positive_number() {
+        <span class="kw">let </span>value = <span class="string">"123"</span>;
+        <span class="kw">let </span>result = felt252_str(value);
+        <span class="macro">assert_eq!</span>(result, [<span class="number">123</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>]);
+    }
 
-        <span class="kw">fn </span>storage_write(
-            <span class="kw-2">&amp;mut </span><span class="self">self</span>,
-            _address_domain: u32,
-            _address: Felt,
-            _value: Felt,
-            _gas: <span class="kw-2">&amp;mut </span>u128,
-        ) -&gt; SyscallResult&lt;()&gt; {
-            <span class="prelude-val">Ok</span>(())
-        }
+    <span class="attr">#[test]
+    </span><span class="kw">fn </span>test_felt252_str_negative_number() {
+        <span class="kw">let </span>value = <span class="string">"-123"</span>;
+        <span class="kw">let </span>result = felt252_str(value);
+        <span class="macro">assert_eq!</span>(
+            result,
+            [
+                <span class="number">4294967174</span>, <span class="number">4294967295</span>, <span class="number">4294967295</span>, <span class="number">4294967295</span>, <span class="number">4294967295</span>, <span class="number">4294967295</span>, <span class="number">16</span>,
+                <span class="number">134217728
+            </span>]
+        );
+    }
 
-        <span class="kw">fn </span>emit_event(
-            <span class="kw-2">&amp;mut </span><span class="self">self</span>,
-            _keys: <span class="kw-2">&amp;</span>[Felt],
-            _data: <span class="kw-2">&amp;</span>[Felt],
-            _gas: <span class="kw-2">&amp;mut </span>u128,
-        ) -&gt; SyscallResult&lt;()&gt; {
-            <span class="prelude-val">Ok</span>(())
-        }
+    <span class="attr">#[test]
+    </span><span class="kw">fn </span>test_felt252_str_zero() {
+        <span class="kw">let </span>value = <span class="string">"0"</span>;
+        <span class="kw">let </span>result = felt252_str(value);
+        <span class="macro">assert_eq!</span>(result, [<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>]);
+    }
 
-        <span class="kw">fn </span>send_message_to_l1(
-            <span class="kw-2">&amp;mut </span><span class="self">self</span>,
-            _to_address: Felt,
-            _payload: <span class="kw-2">&amp;</span>[Felt],
-            _gas: <span class="kw-2">&amp;mut </span>u128,
-        ) -&gt; SyscallResult&lt;()&gt; {
-            <span class="prelude-val">Ok</span>(())
-        }
+    <span class="comment">// ==============================
+    // == TESTS: felt252_short_str
+    // ==============================
+    </span><span class="attr">#[test]
+    </span><span class="kw">fn </span>test_felt252_short_str_short_numeric_string() {
+        <span class="kw">let </span>value = <span class="string">"12345"</span>;
+        <span class="kw">let </span>result = felt252_short_str(value);
+        <span class="macro">assert_eq!</span>(result, [<span class="number">842216501</span>, <span class="number">49</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>]);
+    }
 
-        <span class="kw">fn </span>keccak(
-            <span class="kw-2">&amp;mut </span><span class="self">self</span>,
-            _input: <span class="kw-2">&amp;</span>[u64],
-            gas: <span class="kw-2">&amp;mut </span>u128,
-        ) -&gt; SyscallResult&lt;<span class="kw">crate</span>::starknet::U256&gt; {
-            <span class="kw-2">*</span>gas -= <span class="number">1000</span>;
-            <span class="prelude-val">Ok</span>(U256 {
-                hi: <span class="number">0</span>,
-                lo: <span class="number">1234567890</span>,
-            })
-        }
+    <span class="attr">#[test]
+    </span><span class="kw">fn </span>test_felt252_short_str_short_string_with_non_numeric_characters() {
+        <span class="kw">let </span>value = <span class="string">"hello"</span>;
+        <span class="kw">let </span>result = felt252_short_str(value);
+        <span class="macro">assert_eq!</span>(result, [<span class="number">1701604463</span>, <span class="number">104</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>]);
+    }
 
-        <span class="comment">// Implementing the secp256 syscalls for testing doesn't make sense. They're already
-        // properly tested in integration tests.
+    <span class="attr">#[test]
+    </span><span class="kw">fn </span>test_felt252_short_str_long_numeric_string() {
+        <span class="kw">let </span>value = <span class="string">"1234567890123456789012345678901234567890"</span>;
+        <span class="kw">let </span>result = felt252_short_str(value);
+        <span class="macro">assert_eq!</span>(
+            result,
+            [
+                <span class="number">926431536</span>, <span class="number">859059510</span>, <span class="number">959459634</span>, <span class="number">892745528</span>, <span class="number">825373492</span>, <span class="number">926431536</span>, <span class="number">859059510</span>,
+                <span class="number">959459634
+            </span>]
+        );
+    }
 
-        </span><span class="kw">fn </span>secp256k1_new(
-            <span class="kw-2">&amp;mut </span><span class="self">self</span>,
-            _x: U256,
-            _y: U256,
-            _remaining_gas: <span class="kw-2">&amp;mut </span>u128,
-        ) -&gt; SyscallResult&lt;<span class="prelude-ty">Option</span>&lt;<span class="kw">crate</span>::starknet::Secp256k1Point&gt;&gt; {
-            <span class="macro">unimplemented!</span>()
-        }
+    <span class="attr">#[test]
+    </span><span class="kw">fn </span>test_felt252_short_str_empty_string() {
+        <span class="kw">let </span>value = <span class="string">""</span>;
+        <span class="kw">let </span>result = felt252_short_str(value);
+        <span class="macro">assert_eq!</span>(result, [<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>]);
+    }
 
-        <span class="kw">fn </span>secp256k1_add(
-            <span class="kw-2">&amp;mut </span><span class="self">self</span>,
-            _p0: <span class="kw">crate</span>::starknet::Secp256k1Point,
-            _p1: <span class="kw">crate</span>::starknet::Secp256k1Point,
-            _remaining_gas: <span class="kw-2">&amp;mut </span>u128,
-        ) -&gt; SyscallResult&lt;<span class="kw">crate</span>::starknet::Secp256k1Point&gt; {
-            <span class="macro">unimplemented!</span>()
-        }
+    <span class="attr">#[test]
+    </span><span class="kw">fn </span>test_felt252_short_str_string_with_non_ascii_characters() {
+        <span class="kw">let </span>value = <span class="string">"h€llø"</span>;
+        <span class="kw">let </span>result = felt252_short_str(value);
+        <span class="macro">assert_eq!</span>(result, [<span class="number">6843500</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>]);
+    }
 
-        <span class="kw">fn </span>secp256k1_mul(
-            <span class="kw-2">&amp;mut </span><span class="self">self</span>,
-            _p: <span class="kw">crate</span>::starknet::Secp256k1Point,
-            _m: U256,
-            _remaining_gas: <span class="kw-2">&amp;mut </span>u128,
-        ) -&gt; SyscallResult&lt;<span class="kw">crate</span>::starknet::Secp256k1Point&gt; {
-            <span class="macro">unimplemented!</span>()
-        }
+    <span class="comment">// ==============================
+    // == TESTS: debug_with
+    // ==============================
+    </span><span class="attr">#[test]
+    </span><span class="kw">fn </span>test_debug_with_empty_closure() {
+        <span class="kw">let </span>closure = |_f: <span class="kw-2">&amp;mut </span>Formatter| -&gt; fmt::Result { <span class="prelude-val">Ok</span>(()) };
+        <span class="kw">let </span>debug_wrapper = debug_with(closure);
+        <span class="macro">assert_eq!</span>(<span class="macro">format!</span>(<span class="string">"{:?}"</span>, debug_wrapper), <span class="string">""</span>);
+    }
 
-        <span class="kw">fn </span>secp256k1_get_point_from_x(
-            <span class="kw-2">&amp;mut </span><span class="self">self</span>,
-            _x: U256,
-            _y_parity: bool,
-            _remaining_gas: <span class="kw-2">&amp;mut </span>u128,
-        ) -&gt; SyscallResult&lt;<span class="prelude-ty">Option</span>&lt;<span class="kw">crate</span>::starknet::Secp256k1Point&gt;&gt; {
-            <span class="macro">unimplemented!</span>()
-        }
+    <span class="attr">#[test]
+    #[should_panic]
+    </span><span class="kw">fn </span>test_debug_with_error_closure() {
+        <span class="kw">let </span>closure = |_f: <span class="kw-2">&amp;mut </span>Formatter| -&gt; <span class="prelude-ty">Result</span>&lt;(), fmt::Error&gt; { <span class="prelude-val">Err</span>(fmt::Error) };
+        <span class="kw">let </span>debug_wrapper = debug_with(closure);
+        <span class="kw">let _ </span>= <span class="macro">format!</span>(<span class="string">"{:?}"</span>, debug_wrapper);
+    }
 
-        <span class="kw">fn </span>secp256k1_get_xy(
-            <span class="kw-2">&amp;mut </span><span class="self">self</span>,
-            _p: <span class="kw">crate</span>::starknet::Secp256k1Point,
-            _remaining_gas: <span class="kw-2">&amp;mut </span>u128,
-        ) -&gt; SyscallResult&lt;(U256, U256)&gt; {
-            <span class="macro">unimplemented!</span>()
-        }
+    <span class="attr">#[test]
+    </span><span class="kw">fn </span>test_debug_with_simple_closure() {
+        <span class="kw">let </span>closure = |f: <span class="kw-2">&amp;mut </span>fmt::Formatter| <span class="macro">write!</span>(f, <span class="string">"Hello, world!"</span>);
+        <span class="kw">let </span>debug_wrapper = debug_with(closure);
+        <span class="macro">assert_eq!</span>(<span class="macro">format!</span>(<span class="string">"{:?}"</span>, debug_wrapper), <span class="string">"Hello, world!"</span>);
+    }
 
-        <span class="kw">fn </span>secp256r1_new(
-            <span class="kw-2">&amp;mut </span><span class="self">self</span>,
-            _x: U256,
-            _y: U256,
-            _remaining_gas: <span class="kw-2">&amp;mut </span>u128,
-        ) -&gt; SyscallResult&lt;<span class="prelude-ty">Option</span>&lt;<span class="kw">crate</span>::starknet::Secp256r1Point&gt;&gt; {
-            <span class="macro">unimplemented!</span>()
-        }
+    <span class="attr">#[test]
+    </span><span class="kw">fn </span>test_debug_with_complex_closure() {
+        <span class="kw">let </span>closure = |f: <span class="kw-2">&amp;mut </span>fmt::Formatter| <span class="macro">write!</span>(f, <span class="string">"Name: William, Age: {}"</span>, <span class="number">28</span>);
+        <span class="kw">let </span>debug_wrapper = debug_with(closure);
+        <span class="macro">assert_eq!</span>(<span class="macro">format!</span>(<span class="string">"{:?}"</span>, debug_wrapper), <span class="string">"Name: William, Age: 28"</span>);
+    }
 
-        <span class="kw">fn </span>secp256r1_add(
-            <span class="kw-2">&amp;mut </span><span class="self">self</span>,
-            _p0: <span class="kw">crate</span>::starknet::Secp256r1Point,
-            _p1: <span class="kw">crate</span>::starknet::Secp256r1Point,
-            _remaining_gas: <span class="kw-2">&amp;mut </span>u128,
-        ) -&gt; SyscallResult&lt;<span class="kw">crate</span>::starknet::Secp256r1Point&gt; {
-            <span class="macro">unimplemented!</span>()
-        }
+    <span class="attr">#[test]
+    </span><span class="kw">fn </span>test_generate_function_name_debug_name() {
+        <span class="kw">let </span>function_id = FunctionId {
+            id: <span class="number">123</span>,
+            debug_name: <span class="prelude-val">Some</span>(<span class="string">"function_name"</span>.into()),
+        };
 
-        <span class="kw">fn </span>secp256r1_mul(
-            <span class="kw-2">&amp;mut </span><span class="self">self</span>,
-            _p: <span class="kw">crate</span>::starknet::Secp256r1Point,
-            _m: U256,
-            _remaining_gas: <span class="kw-2">&amp;mut </span>u128,
-        ) -&gt; SyscallResult&lt;<span class="kw">crate</span>::starknet::Secp256r1Point&gt; {
-            <span class="macro">unimplemented!</span>()
-        }
+        <span class="macro">assert_eq!</span>(generate_function_name(<span class="kw-2">&amp;</span>function_id), <span class="string">"function_name(f123)"</span>);
+    }
 
-        <span class="kw">fn </span>secp256r1_get_point_from_x(
-            <span class="kw-2">&amp;mut </span><span class="self">self</span>,
-            _x: U256,
-            _y_parity: bool,
-            _remaining_gas: <span class="kw-2">&amp;mut </span>u128,
-        ) -&gt; SyscallResult&lt;<span class="prelude-ty">Option</span>&lt;<span class="kw">crate</span>::starknet::Secp256r1Point&gt;&gt; {
-            <span class="macro">unimplemented!</span>()
-        }
+    <span class="attr">#[test]
+    </span><span class="kw">fn </span>test_generate_function_name_without_debug_name() {
+        <span class="kw">let </span>function_id = FunctionId {
+            id: <span class="number">123</span>,
+            debug_name: <span class="prelude-val">None</span>,
+        };
 
-        <span class="kw">fn </span>secp256r1_get_xy(
-            <span class="kw-2">&amp;mut </span><span class="self">self</span>,
-            _p: <span class="kw">crate</span>::starknet::Secp256r1Point,
-            _remaining_gas: <span class="kw-2">&amp;mut </span>u128,
-        ) -&gt; SyscallResult&lt;(U256, U256)&gt; {
-            <span class="macro">unimplemented!</span>()
-        }
+        <span class="macro">assert_eq!</span>(generate_function_name(<span class="kw-2">&amp;</span>function_id), <span class="string">"f123"</span>);
+    }
+
+    <span class="attr">#[test]
+    </span><span class="kw">fn </span>test_cairo_to_sierra_path() {
+        <span class="comment">// Define the path to the cairo program.
+        </span><span class="kw">let </span>program_path = Path::new(<span class="string">"programs/examples/hello.cairo"</span>);
+        <span class="comment">// Compile the cairo program to sierra.
+        </span><span class="kw">let </span>sierra_program = cairo_to_sierra(program_path);
+
+        <span class="comment">// Define the entry point function for comparison.
+        </span><span class="kw">let </span>entry_point = <span class="string">"hello::hello::greet"</span>;
+        <span class="comment">// Find the function ID of the entry point function in the sierra program.
+        </span><span class="kw">let </span>entry_point_id = find_function_id(<span class="kw-2">&amp;</span>sierra_program, entry_point);
+
+        <span class="comment">// Assert that the debug name of the entry point function matches the expected value.
+        </span><span class="macro">assert_eq!</span>(
+            entry_point_id.debug_name,
+            <span class="prelude-val">Some</span>(<span class="string">"hello::hello::greet"</span>.into())
+        );
+    }
+
+    <span class="attr">#[test]
+    </span><span class="kw">fn </span>test_cairo_to_sierra_source() {
+        <span class="comment">// Define the content of the cairo program as a string.
+        </span><span class="kw">let </span>content = <span class="string">"type u8 = u8;"</span>;
+
+        <span class="comment">// Create a named temporary file and write the content to it.
+        </span><span class="kw">let </span><span class="kw-2">mut </span>file = tempfile::NamedTempFile::new().unwrap();
+        file.write_all(content.as_bytes()).unwrap();
+        <span class="comment">// Get the path of the temporary file.
+        </span><span class="kw">let </span>file_path = file.path().to_path_buf();
+
+        <span class="comment">// Compile the cairo program to sierra using the path of the temporary file.
+        </span><span class="kw">let </span>sierra_program = cairo_to_sierra(<span class="kw-2">&amp;</span>file_path);
+
+        <span class="comment">// Assert that the sierra program has no library function declarations, statements, or functions.
+        </span><span class="macro">assert!</span>(sierra_program.libfunc_declarations.is_empty());
+        <span class="macro">assert!</span>(sierra_program.statements.is_empty());
+        <span class="macro">assert!</span>(sierra_program.funcs.is_empty());
+
+        <span class="comment">// Assert that the debug name of the first type declaration matches the expected value.
+        </span><span class="macro">assert_eq!</span>(sierra_program.type_declarations.len(), <span class="number">1</span>);
+        <span class="macro">assert_eq!</span>(
+            sierra_program.type_declarations[<span class="number">0</span>].id.debug_name,
+            <span class="prelude-val">Some</span>(<span class="string">"u8"</span>.into())
+        );
+    }
+
+    <span class="attr">#[test]
+    </span><span class="kw">fn </span>test_cairo_to_sierra_with_debug_info() {
+        <span class="comment">// Define the path to the cairo program.
+        </span><span class="kw">let </span>program_path = Path::new(<span class="string">"programs/examples/hello.cairo"</span>);
+        <span class="comment">// Create a new context.
+        </span><span class="kw">let </span>context = Context::new();
+        <span class="comment">// Compile the cairo program to sierra, including debug information.
+        </span><span class="kw">let </span>sierra_program = cairo_to_sierra_with_debug_info(<span class="kw-2">&amp;</span>context, program_path).unwrap();
+
+        <span class="comment">// Define the name of the entry point function for comparison.
+        </span><span class="kw">let </span>entry_point = <span class="string">"hello::hello::greet"</span>;
+        <span class="comment">// Find the function ID of the entry point function in the sierra program.
+        </span><span class="kw">let </span>entry_point_id = find_function_id(<span class="kw-2">&amp;</span>sierra_program.<span class="number">0</span>, entry_point);
+
+        <span class="comment">// Assert that the debug name of the entry point function matches the expected value.
+        </span><span class="macro">assert_eq!</span>(
+            entry_point_id.debug_name,
+            <span class="prelude-val">Some</span>(<span class="string">"hello::hello::greet"</span>.into())
+        );
+
+        <span class="comment">// Check if the sierra program contains a function with the specified debug name for the entry point function.
+        </span><span class="macro">assert!</span>(sierra_program
+            .<span class="number">1
+            </span>.funcs
+            .keys()
+            .any(|func| func.debug_name == <span class="prelude-val">Some</span>(<span class="string">"hello::hello::greet"</span>.into())));
     }
 }
 </code></pre></div></section></main></body></html>

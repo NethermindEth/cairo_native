@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"mod":["compile","jit_engine","libfuncs","types"]};
+window.SIDEBAR_ITEMS = {"enum":["Error","SierraAssertError"],"type":["Result"]};

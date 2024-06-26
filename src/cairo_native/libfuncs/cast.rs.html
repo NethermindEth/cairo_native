@@ -1,5 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/libfuncs/cast.rs`."><title>cast.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="cairo_native" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
-    <main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/libfuncs/cast.rs`."><title>cast.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-081576b923113409.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="cairo_native" data-themes="" data-resource-suffix="" data-rustdoc-version="1.79.0 (129f3b996 2024-06-10)" data-channel="1.79.0" data-search-js="search-bf21c90c8c1d92b1.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-e32f0c247825364d.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-20a3ad099b048cf2.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-09095024cf37855e.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../../cairo_native/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Type ‘S’ or ‘/’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings">Settings</a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -692,120 +691,14 @@
 <a href="#691" id="691">691</a>
 <a href="#692" id="692">692</a>
 <a href="#693" id="693">693</a>
-<a href="#694" id="694">694</a>
-<a href="#695" id="695">695</a>
-<a href="#696" id="696">696</a>
-<a href="#697" id="697">697</a>
-<a href="#698" id="698">698</a>
-<a href="#699" id="699">699</a>
-<a href="#700" id="700">700</a>
-<a href="#701" id="701">701</a>
-<a href="#702" id="702">702</a>
-<a href="#703" id="703">703</a>
-<a href="#704" id="704">704</a>
-<a href="#705" id="705">705</a>
-<a href="#706" id="706">706</a>
-<a href="#707" id="707">707</a>
-<a href="#708" id="708">708</a>
-<a href="#709" id="709">709</a>
-<a href="#710" id="710">710</a>
-<a href="#711" id="711">711</a>
-<a href="#712" id="712">712</a>
-<a href="#713" id="713">713</a>
-<a href="#714" id="714">714</a>
-<a href="#715" id="715">715</a>
-<a href="#716" id="716">716</a>
-<a href="#717" id="717">717</a>
-<a href="#718" id="718">718</a>
-<a href="#719" id="719">719</a>
-<a href="#720" id="720">720</a>
-<a href="#721" id="721">721</a>
-<a href="#722" id="722">722</a>
-<a href="#723" id="723">723</a>
-<a href="#724" id="724">724</a>
-<a href="#725" id="725">725</a>
-<a href="#726" id="726">726</a>
-<a href="#727" id="727">727</a>
-<a href="#728" id="728">728</a>
-<a href="#729" id="729">729</a>
-<a href="#730" id="730">730</a>
-<a href="#731" id="731">731</a>
-<a href="#732" id="732">732</a>
-<a href="#733" id="733">733</a>
-<a href="#734" id="734">734</a>
-<a href="#735" id="735">735</a>
-<a href="#736" id="736">736</a>
-<a href="#737" id="737">737</a>
-<a href="#738" id="738">738</a>
-<a href="#739" id="739">739</a>
-<a href="#740" id="740">740</a>
-<a href="#741" id="741">741</a>
-<a href="#742" id="742">742</a>
-<a href="#743" id="743">743</a>
-<a href="#744" id="744">744</a>
-<a href="#745" id="745">745</a>
-<a href="#746" id="746">746</a>
-<a href="#747" id="747">747</a>
-<a href="#748" id="748">748</a>
-<a href="#749" id="749">749</a>
-<a href="#750" id="750">750</a>
-<a href="#751" id="751">751</a>
-<a href="#752" id="752">752</a>
-<a href="#753" id="753">753</a>
-<a href="#754" id="754">754</a>
-<a href="#755" id="755">755</a>
-<a href="#756" id="756">756</a>
-<a href="#757" id="757">757</a>
-<a href="#758" id="758">758</a>
-<a href="#759" id="759">759</a>
-<a href="#760" id="760">760</a>
-<a href="#761" id="761">761</a>
-<a href="#762" id="762">762</a>
-<a href="#763" id="763">763</a>
-<a href="#764" id="764">764</a>
-<a href="#765" id="765">765</a>
-<a href="#766" id="766">766</a>
-<a href="#767" id="767">767</a>
-<a href="#768" id="768">768</a>
-<a href="#769" id="769">769</a>
-<a href="#770" id="770">770</a>
-<a href="#771" id="771">771</a>
-<a href="#772" id="772">772</a>
-<a href="#773" id="773">773</a>
-<a href="#774" id="774">774</a>
-<a href="#775" id="775">775</a>
-<a href="#776" id="776">776</a>
-<a href="#777" id="777">777</a>
-<a href="#778" id="778">778</a>
-<a href="#779" id="779">779</a>
-<a href="#780" id="780">780</a>
-<a href="#781" id="781">781</a>
-<a href="#782" id="782">782</a>
-<a href="#783" id="783">783</a>
-<a href="#784" id="784">784</a>
-<a href="#785" id="785">785</a>
-<a href="#786" id="786">786</a>
-<a href="#787" id="787">787</a>
-<a href="#788" id="788">788</a>
-<a href="#789" id="789">789</a>
-<a href="#790" id="790">790</a>
-<a href="#791" id="791">791</a>
-<a href="#792" id="792">792</a>
-<a href="#793" id="793">793</a>
-<a href="#794" id="794">794</a>
-<a href="#795" id="795">795</a>
-<a href="#796" id="796">796</a>
-<a href="#797" id="797">797</a>
-<a href="#798" id="798">798</a>
-<a href="#799" id="799">799</a>
-<a href="#800" id="800">800</a>
 </pre></div><pre class="rust"><code><span class="doccomment">//! # Casting libfuncs
 
 </span><span class="kw">use </span>std::ops::Shr;
 
 <span class="kw">use </span><span class="kw">super</span>::LibfuncHelper;
 <span class="kw">use crate</span>::{
-    error::libfuncs::{ErrorImpl, <span class="prelude-ty">Result</span>},
+    block_ext::BlockExt,
+    error::{Error, <span class="prelude-ty">Result</span>, SierraAssertError},
     metadata::{prime_modulo::PrimeModuloMeta, MetadataStorage},
     types::TypeBuilder,
 };
@@ -823,9 +716,11 @@
         arith::{<span class="self">self</span>, CmpiPredicate},
         cf,
     },
-    ir::{attribute::IntegerAttribute, r#type::IntegerType, Attribute, Block, Location},
+    ir::{r#type::IntegerType, Block, Location},
     Context,
 };
+<span class="kw">use </span>num_bigint::{BigInt, ToBigInt};
+<span class="kw">use </span>num_traits::Euclid;
 <span class="kw">use </span>starknet_types_core::felt::Felt;
 
 <span class="doccomment">/// Select and call the correct libfunc builder function from the selector.
@@ -863,13 +758,12 @@
 
     <span class="kw">let </span>src_type = registry.get_type(<span class="kw-2">&amp;</span>info.from_ty)<span class="question-mark">?</span>;
     <span class="kw">let </span>dst_type = registry.get_type(<span class="kw-2">&amp;</span>info.to_ty)<span class="question-mark">?</span>;
-
-    <span class="kw">let </span>src_width = src_type.integer_width().ok_or_else(|| {
-        ErrorImpl::SierraAssert(<span class="string">"casts always happen between numerical types"</span>.to_string())
-    })<span class="question-mark">?</span>;
-    <span class="kw">let </span>dst_width = dst_type.integer_width().ok_or_else(|| {
-        ErrorImpl::SierraAssert(<span class="string">"casts always happen between numerical types"</span>.to_string())
-    })<span class="question-mark">?</span>;
+    <span class="kw">let </span>src_width = src_type
+        .integer_width()
+        .ok_or_else(|| Error::SierraAssert(SierraAssertError::Cast))<span class="question-mark">?</span>;
+    <span class="kw">let </span>dst_width = dst_type
+        .integer_width()
+        .ok_or_else(|| Error::SierraAssert(SierraAssertError::Cast))<span class="question-mark">?</span>;
 
     <span class="kw">let </span>src_ty = src_type.build(context, helper, registry, metadata, <span class="kw-2">&amp;</span>info.from_ty)<span class="question-mark">?</span>;
     <span class="kw">let </span>dst_ty = dst_type.build(context, helper, registry, metadata, <span class="kw-2">&amp;</span>info.to_ty)<span class="question-mark">?</span>;
@@ -880,61 +774,50 @@
         location,
     );
 
-    <span class="kw">let </span>is_signed = src_type.is_integer_signed().ok_or_else(|| {
-        ErrorImpl::SierraAssert(<span class="string">"casts always happen between numerical types"</span>.to_string())
-    })<span class="question-mark">? </span>|| dst_type.is_integer_signed().ok_or_else(|| {
-        ErrorImpl::SierraAssert(<span class="string">"casts always happen between numerical types"</span>.to_string())
-    })<span class="question-mark">?</span>;
-    <span class="kw">let </span>is_felt = <span class="macro">matches!</span>(src_type, CoreTypeConcrete::Felt252(<span class="kw">_</span>));
-
+    <span class="kw">let </span>src_is_signed = src_type
+        .is_integer_signed()
+        .ok_or_else(|| Error::SierraAssert(SierraAssertError::Cast))<span class="question-mark">?</span>;
+    <span class="kw">let </span>dst_is_signed = dst_type
+        .is_integer_signed()
+        .ok_or_else(|| Error::SierraAssert(SierraAssertError::Cast))<span class="question-mark">?</span>;
+    <span class="kw">let </span>any_is_signed = src_is_signed | dst_is_signed;
+    <span class="kw">let </span>src_is_felt = <span class="macro">matches!</span>(
+        src_type,
+        CoreTypeConcrete::Felt252(<span class="kw">_</span>) | CoreTypeConcrete::BoundedInt(<span class="kw">_</span>)
+    );
+    <span class="kw">let </span>dst_is_felt = <span class="macro">matches!</span>(
+        dst_type,
+        CoreTypeConcrete::Felt252(<span class="kw">_</span>) | CoreTypeConcrete::BoundedInt(<span class="kw">_</span>)
+    );
     <span class="kw">let </span>src_value: melior::ir::Value = entry.argument(<span class="number">1</span>)<span class="question-mark">?</span>.into();
 
     <span class="kw">let </span><span class="kw-2">mut </span>block = entry;
 
-    <span class="kw">let </span>(is_in_range, result) = <span class="kw">if </span>src_ty == dst_ty {
-        <span class="kw">let </span>k0 = block
-            .append_operation(arith::constant(
-                context,
-                IntegerAttribute::new(<span class="number">0</span>, IntegerType::new(context, <span class="number">1</span>).into()).into(),
-                location,
-            ))
-            .result(<span class="number">0</span>)<span class="question-mark">?
-            </span>.into();
-
+    <span class="kw">let </span>(is_in_range, result) = <span class="kw">if </span>info.from_ty == info.to_ty {
+        <span class="comment">// can't cast to the same type
+        </span><span class="kw">let </span>k0 = block.const_int(context, location, <span class="number">0</span>, <span class="number">1</span>)<span class="question-mark">?</span>;
         (k0, src_value)
     } <span class="kw">else </span>{
         <span class="comment">// make unsigned felt into signed felt
         // felt &gt; half prime = negative
-        </span><span class="kw">let </span>src_value = <span class="kw">if </span>is_felt {
-            <span class="kw">let </span>attr_halfprime_i252 = Attribute::parse(
+        </span><span class="kw">let </span>felt_to_int = src_is_felt &amp;&amp; !dst_is_felt;
+        <span class="kw">let </span>src_value = <span class="kw">if </span>felt_to_int {
+            <span class="kw">let </span>attr_halfprime_i252 = metadata
+                .get::&lt;PrimeModuloMeta&lt;Felt&gt;&gt;()
+                .ok_or(Error::MissingMetadata)<span class="question-mark">?
+                </span>.prime()
+                .shr(<span class="number">1</span>);
+
+            <span class="kw">let </span>half_prime =
+                block.const_int_from_type(context, location, attr_halfprime_i252, src_ty)<span class="question-mark">?</span>;
+
+            <span class="kw">let </span>is_felt_neg = block.append_op_result(arith::cmpi(
                 context,
-                <span class="kw-2">&amp;</span><span class="macro">format!</span>(
-                    <span class="string">"{} : {}"</span>,
-                    metadata
-                        .get::&lt;PrimeModuloMeta&lt;Felt&gt;&gt;()
-                        .ok_or(ErrorImpl::MissingMetadata)<span class="question-mark">?
-                        </span>.prime()
-                        .shr(<span class="number">1</span>),
-                    src_ty
-                ),
-            )
-            .ok_or(ErrorImpl::ParseAttributeError)<span class="question-mark">?</span>;
-            <span class="kw">let </span>half_prime: melior::ir::Value = block
-                .append_operation(arith::constant(context, attr_halfprime_i252, location))
-                .result(<span class="number">0</span>)<span class="question-mark">?
-                </span>.into();
-
-            <span class="kw">let </span>is_felt_neg = block
-                .append_operation(arith::cmpi(
-                    context,
-                    CmpiPredicate::Ugt,
-                    src_value,
-                    half_prime,
-                    location,
-                ))
-                .result(<span class="number">0</span>)<span class="question-mark">?
-                </span>.into();
-
+                CmpiPredicate::Ugt,
+                src_value,
+                half_prime,
+                location,
+            ))<span class="question-mark">?</span>;
             <span class="kw">let </span>is_neg_block = helper.append_block(Block::new(<span class="kw-2">&amp;</span>[]));
             <span class="kw">let </span>is_not_neg_block = helper.append_block(Block::new(<span class="kw-2">&amp;</span>[]));
             <span class="kw">let </span>final_block = helper.append_block(Block::new(<span class="kw-2">&amp;</span>[(src_ty, location)]));
@@ -950,45 +833,27 @@
             ));
 
             {
-                <span class="kw">let </span>prime = is_neg_block
-                    .append_operation(arith::constant(
-                        context,
-                        Attribute::parse(
-                            context,
-                            <span class="kw-2">&amp;</span><span class="macro">format!</span>(
-                                <span class="string">"{} : {}"</span>,
-                                metadata
-                                    .get::&lt;PrimeModuloMeta&lt;Felt&gt;&gt;()
-                                    .ok_or(ErrorImpl::MissingMetadata)<span class="question-mark">?
-                                    </span>.prime(),
-                                src_ty
-                            ),
-                        )
-                        .ok_or(ErrorImpl::ParseAttributeError)<span class="question-mark">?</span>,
-                        location,
-                    ))
-                    .result(<span class="number">0</span>)<span class="question-mark">?
-                    </span>.into();
+                <span class="kw">let </span>value = metadata
+                    .get::&lt;PrimeModuloMeta&lt;Felt&gt;&gt;()
+                    .ok_or(Error::MissingMetadata)<span class="question-mark">?
+                    </span>.prime();
+                <span class="kw">let </span>prime = is_neg_block.const_int_from_type(
+                    context,
+                    location,
+                    value.to_bigint().unwrap(),
+                    src_ty,
+                )<span class="question-mark">?</span>;
 
-                <span class="kw">let </span><span class="kw-2">mut </span>src_value_is_neg: melior::ir::Value = is_neg_block
-                    .append_operation(arith::subi(prime, src_value, location))
-                    .result(<span class="number">0</span>)<span class="question-mark">?
-                    </span>.into();
+                <span class="kw">let </span><span class="kw-2">mut </span>src_value_is_neg =
+                    is_neg_block.append_op_result(arith::subi(prime, src_value, location))<span class="question-mark">?</span>;
 
-                <span class="kw">let </span>kneg1 = is_neg_block
-                    .append_operation(arith::constant(
-                        context,
-                        Attribute::parse(context, <span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">"-1 : {}"</span>, src_ty))
-                            .ok_or(ErrorImpl::ParseAttributeError)<span class="question-mark">?</span>,
-                        location,
-                    ))
-                    .result(<span class="number">0</span>)<span class="question-mark">?
-                    </span>.into();
+                <span class="kw">let </span>kneg1 = is_neg_block.const_int_from_type(context, location, -<span class="number">1</span>, src_ty)<span class="question-mark">?</span>;
 
-                src_value_is_neg = is_neg_block
-                    .append_operation(arith::muli(src_value_is_neg, kneg1, location))
-                    .result(<span class="number">0</span>)<span class="question-mark">?
-                    </span>.into();
+                src_value_is_neg = is_neg_block.append_op_result(arith::muli(
+                    src_value_is_neg,
+                    kneg1,
+                    location,
+                ))<span class="question-mark">?</span>;
 
                 is_neg_block.append_operation(cf::br(final_block, <span class="kw-2">&amp;</span>[src_value_is_neg], location));
             }
@@ -1003,21 +868,12 @@
         };
 
         <span class="kw">let </span>result = <span class="kw">if </span>src_width &gt; dst_width {
-            block
-                .append_operation(arith::trunci(src_value, dst_ty, location))
-                .result(<span class="number">0</span>)<span class="question-mark">?
-                </span>.into()
-        } <span class="kw">else if </span>is_signed {
-            block
-                .append_operation(arith::extsi(src_value, dst_ty, location))
-                .result(<span class="number">0</span>)<span class="question-mark">?
-                </span>.into()
-        } <span class="kw">else </span>{
-            block
-                .append_operation(arith::extui(src_value, dst_ty, location))
-                .result(<span class="number">0</span>)<span class="question-mark">?
-                </span>.into()
-        };
+            block.append_op_result(arith::trunci(src_value, dst_ty, location))<span class="question-mark">?
+        </span>} <span class="kw">else if </span>src_is_signed {
+            block.append_op_result(arith::extsi(src_value, dst_ty, location))<span class="question-mark">?
+        </span>} <span class="kw">else </span>{
+            block.append_op_result(arith::extui(src_value, dst_ty, location))<span class="question-mark">?
+        </span>};
 
         <span class="kw">let </span>(compare_value, compare_ty) = <span class="kw">if </span>src_width &gt; dst_width {
             (src_value, src_ty)
@@ -1025,92 +881,60 @@
             (result, dst_ty)
         };
 
-        <span class="kw">let </span>max_value = block
-            .append_operation(arith::constant(
-                context,
-                Attribute::parse(
-                    context,
-                    <span class="kw-2">&amp;</span><span class="macro">format!</span>(
-                        <span class="string">"{}: {}"</span>,
-                        info.to_range
-                            .intersection(<span class="kw-2">&amp;</span>info.from_range)
-                            .ok_or_else(|| ErrorImpl::SierraAssert(
-                                <span class="string">"range should always interesct"</span>.to_string()
-                            ))<span class="question-mark">?
-                            </span>.upper,
-                        compare_ty
-                    ),
-                )
-                .ok_or_else(|| {
-                    ErrorImpl::CompileError(
-                        <span class="string">"downcast: failed to make max value attribute"</span>.to_string(),
-                    )
-                })<span class="question-mark">?</span>,
-                location,
-            ))
-            .result(<span class="number">0</span>)<span class="question-mark">?
-            </span>.into();
+        <span class="kw">let </span>info_range = info
+            .to_range
+            .intersection(<span class="kw-2">&amp;</span>info.from_range)
+            .ok_or_else(|| {
+                Error::SierraAssert(SierraAssertError::Range {
+                    ranges: Box::new((info.from_range.clone(), info.to_range.clone())),
+                })
+            })<span class="question-mark">?</span>;
 
-        <span class="kw">let </span>min_value = block
-            .append_operation(arith::constant(
-                context,
-                Attribute::parse(
-                    context,
-                    <span class="kw-2">&amp;</span><span class="macro">format!</span>(
-                        <span class="string">"{}: {}"</span>,
-                        info.to_range
-                            .intersection(<span class="kw-2">&amp;</span>info.from_range)
-                            .ok_or_else(|| ErrorImpl::SierraAssert(
-                                <span class="string">"range should always interesct"</span>.to_string()
-                            ))<span class="question-mark">?
-                            </span>.lower,
-                        compare_ty
-                    ),
-                )
-                .ok_or_else(|| {
-                    ErrorImpl::CompileError(
-                        <span class="string">"downcast: failed to make min value attribute"</span>.to_string(),
-                    )
-                })<span class="question-mark">?</span>,
-                location,
-            ))
-            .result(<span class="number">0</span>)<span class="question-mark">?
-            </span>.into();
+        <span class="kw">let </span><span class="kw-2">mut </span>int_max_value: BigInt = info_range.upper - <span class="number">1</span>;
 
-        <span class="kw">let </span>is_in_range_upper = block
-            .append_operation(arith::cmpi(
-                context,
-                <span class="kw">if </span>is_signed {
-                    CmpiPredicate::Slt
-                } <span class="kw">else </span>{
-                    CmpiPredicate::Ult
-                },
-                compare_value,
-                max_value,
-                location,
-            ))
-            .result(<span class="number">0</span>)<span class="question-mark">?
-            </span>.into();
+        <span class="kw">let </span><span class="kw-2">mut </span>int_min_value = info_range.lower;
 
-        <span class="kw">let </span>is_in_range_lower = block
-            .append_operation(arith::cmpi(
-                context,
-                <span class="kw">if </span>is_signed {
-                    CmpiPredicate::Sge
-                } <span class="kw">else </span>{
-                    CmpiPredicate::Uge
-                },
-                compare_value,
-                min_value,
-                location,
-            ))
-            .result(<span class="number">0</span>)<span class="question-mark">?
-            </span>.into();
+        <span class="kw">if </span>dst_is_felt {
+            <span class="kw">let </span>prime = <span class="kw-2">&amp;</span>metadata
+                .get::&lt;PrimeModuloMeta&lt;Felt&gt;&gt;()
+                .ok_or(Error::MissingMetadata)<span class="question-mark">?
+                </span>.prime()
+                .to_bigint()
+                .expect(<span class="string">"biguint should be casted to bigint"</span>);
 
-        <span class="kw">let </span>is_in_range = block
-            .append_operation(arith::andi(is_in_range_upper, is_in_range_lower, location))
-            .result(<span class="number">0</span>)<span class="question-mark">?
-            </span>.into();
+            int_min_value = int_min_value.rem_euclid(prime);
+            int_max_value = int_max_value.rem_euclid(prime);
+        }
+
+        <span class="kw">let </span>max_value = block.const_int_from_type(context, location, int_max_value, compare_ty)<span class="question-mark">?</span>;
+        <span class="kw">let </span>min_value = block.const_int_from_type(context, location, int_min_value, compare_ty)<span class="question-mark">?</span>;
+
+        <span class="kw">let </span>is_in_range_upper = block.append_op_result(arith::cmpi(
+            context,
+            <span class="kw">if </span>any_is_signed {
+                CmpiPredicate::Sle
+            } <span class="kw">else </span>{
+                CmpiPredicate::Ule
+            },
+            compare_value,
+            max_value,
+            location,
+        ))<span class="question-mark">?</span>;
+
+        <span class="kw">let </span>is_in_range_lower = block.append_op_result(arith::cmpi(
+            context,
+            <span class="kw">if </span>any_is_signed {
+                CmpiPredicate::Sge
+            } <span class="kw">else </span>{
+                CmpiPredicate::Uge
+            },
+            compare_value,
+            min_value,
+            location,
+        ))<span class="question-mark">?</span>;
+
+        <span class="kw">let </span>is_in_range =
+            block.append_op_result(arith::andi(is_in_range_upper, is_in_range_lower, location))<span class="question-mark">?</span>;
 
         (is_in_range, result)
     };
@@ -1159,19 +983,17 @@
         location,
     );
 
-    <span class="kw">let </span>src_width = src_ty.integer_width().ok_or_else(|| {
-        ErrorImpl::SierraAssert(<span class="string">"casts always happen between numerical types"</span>.to_string())
-    })<span class="question-mark">?</span>;
-    <span class="kw">let </span>dst_width = dst_ty.integer_width().ok_or_else(|| {
-        ErrorImpl::SierraAssert(<span class="string">"casts always happen between numerical types"</span>.to_string())
-    })<span class="question-mark">?</span>;
+    <span class="kw">let </span>src_width = src_ty
+        .integer_width()
+        .ok_or_else(|| Error::SierraAssert(SierraAssertError::Cast))<span class="question-mark">?</span>;
+    <span class="kw">let </span>dst_width = dst_ty
+        .integer_width()
+        .ok_or_else(|| Error::SierraAssert(SierraAssertError::Cast))<span class="question-mark">?</span>;
     <span class="macro">assert!</span>(src_width &lt;= dst_width);
 
-    <span class="kw">let </span>is_signed = src_ty.is_integer_signed().ok_or_else(|| {
-        ErrorImpl::SierraAssert(<span class="string">"casts always happen between numerical types"</span>.to_string())
-    })<span class="question-mark">? </span>|| dst_ty.is_integer_signed().ok_or_else(|| {
-        ErrorImpl::SierraAssert(<span class="string">"casts always happen between numerical types"</span>.to_string())
-    })<span class="question-mark">?</span>;
+    <span class="kw">let </span>is_signed = src_ty
+        .is_integer_signed()
+        .ok_or_else(|| Error::SierraAssert(SierraAssertError::Cast))<span class="question-mark">?</span>;
 
     <span class="kw">let </span>is_felt = <span class="macro">matches!</span>(dst_ty, CoreTypeConcrete::Felt252(<span class="kw">_</span>));
 
@@ -1179,37 +1001,23 @@
 
     <span class="kw">let </span>result = <span class="kw">if </span>src_width == dst_width {
         block.argument(<span class="number">0</span>)<span class="question-mark">?</span>.into()
-    } <span class="kw">else if </span>is_signed {
+    } <span class="kw">else if </span>is_signed || is_felt {
         <span class="kw">if </span>is_felt {
-            <span class="kw">let </span>result = block
-                .append_operation(arith::extsi(
-                    block.argument(<span class="number">0</span>)<span class="question-mark">?</span>.into(),
-                    IntegerType::new(context, dst_width.try_into()<span class="question-mark">?</span>).into(),
-                    location,
-                ))
-                .result(<span class="number">0</span>)<span class="question-mark">?
-                </span>.into();
+            <span class="kw">let </span>result = block.append_op_result(arith::extsi(
+                block.argument(<span class="number">0</span>)<span class="question-mark">?</span>.into(),
+                IntegerType::new(context, dst_width.try_into()<span class="question-mark">?</span>).into(),
+                location,
+            ))<span class="question-mark">?</span>;
 
-            <span class="kw">let </span>kzero = block
-                .append_operation(arith::constant(
-                    context,
-                    Attribute::parse(context, <span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">"0 : {}"</span>, dst_type))
-                        .ok_or(ErrorImpl::ParseAttributeError)<span class="question-mark">?</span>,
-                    location,
-                ))
-                .result(<span class="number">0</span>)<span class="question-mark">?
-                </span>.into();
+            <span class="kw">let </span>kzero = block.const_int_from_type(context, location, <span class="number">0</span>, dst_type)<span class="question-mark">?</span>;
 
-            <span class="kw">let </span>is_neg = block
-                .append_operation(arith::cmpi(
-                    context,
-                    CmpiPredicate::Slt,
-                    result,
-                    kzero,
-                    location,
-                ))
-                .result(<span class="number">0</span>)<span class="question-mark">?
-                </span>.into();
+            <span class="kw">let </span>is_neg = block.append_op_result(arith::cmpi(
+                context,
+                CmpiPredicate::Slt,
+                result,
+                kzero,
+                location,
+            ))<span class="question-mark">?</span>;
 
             <span class="kw">let </span>is_neg_block = helper.append_block(Block::new(<span class="kw-2">&amp;</span>[]));
             <span class="kw">let </span>is_not_neg_block = helper.append_block(Block::new(<span class="kw-2">&amp;</span>[]));
@@ -1226,49 +1034,32 @@
             ));
 
             {
-                <span class="kw">let </span>result = is_not_neg_block
-                    .append_operation(arith::extui(
-                        entry.argument(<span class="number">0</span>)<span class="question-mark">?</span>.into(),
-                        IntegerType::new(context, dst_width.try_into()<span class="question-mark">?</span>).into(),
-                        location,
-                    ))
-                    .result(<span class="number">0</span>)<span class="question-mark">?
-                    </span>.into();
+                <span class="kw">let </span>result = is_not_neg_block.append_op_result(arith::extui(
+                    entry.argument(<span class="number">0</span>)<span class="question-mark">?</span>.into(),
+                    IntegerType::new(context, dst_width.try_into()<span class="question-mark">?</span>).into(),
+                    location,
+                ))<span class="question-mark">?</span>;
+
                 is_not_neg_block.append_operation(cf::br(final_block, <span class="kw-2">&amp;</span>[result], location));
             }
 
             {
-                <span class="kw">let </span><span class="kw-2">mut </span>result = is_neg_block
-                    .append_operation(arith::extsi(
-                        entry.argument(<span class="number">0</span>)<span class="question-mark">?</span>.into(),
-                        IntegerType::new(context, dst_width.try_into()<span class="question-mark">?</span>).into(),
-                        location,
-                    ))
-                    .result(<span class="number">0</span>)<span class="question-mark">?
-                    </span>.into();
-                <span class="kw">let </span>prime = is_neg_block
-                    .append_operation(arith::constant(
-                        context,
-                        Attribute::parse(
-                            context,
-                            <span class="kw-2">&amp;</span><span class="macro">format!</span>(
-                                <span class="string">"{} : {}"</span>,
-                                metadata
-                                    .get::&lt;PrimeModuloMeta&lt;Felt&gt;&gt;()
-                                    .ok_or(ErrorImpl::MissingMetadata)<span class="question-mark">?
-                                    </span>.prime(),
-                                dst_type
-                            ),
-                        )
-                        .ok_or(ErrorImpl::ParseAttributeError)<span class="question-mark">?</span>,
-                        location,
-                    ))
-                    .result(<span class="number">0</span>)<span class="question-mark">?
-                    </span>.into();
-                result = is_neg_block
-                    .append_operation(arith::addi(result, prime, location))
-                    .result(<span class="number">0</span>)<span class="question-mark">?
-                    </span>.into();
+                <span class="kw">let </span><span class="kw-2">mut </span>result = is_neg_block.append_op_result(arith::extsi(
+                    entry.argument(<span class="number">0</span>)<span class="question-mark">?</span>.into(),
+                    IntegerType::new(context, dst_width.try_into()<span class="question-mark">?</span>).into(),
+                    location,
+                ))<span class="question-mark">?</span>;
+
+                <span class="kw">let </span>value = metadata
+                    .get::&lt;PrimeModuloMeta&lt;Felt&gt;&gt;()
+                    .ok_or(Error::MissingMetadata)<span class="question-mark">?
+                    </span>.prime()
+                    .to_bigint()
+                    .unwrap();
+
+                <span class="kw">let </span>prime = is_neg_block.const_int_from_type(context, location, value, dst_type)<span class="question-mark">?</span>;
+
+                result = is_neg_block.append_op_result(arith::addi(result, prime, location))<span class="question-mark">?</span>;
                 is_neg_block.append_operation(cf::br(final_block, <span class="kw-2">&amp;</span>[result], location));
             }
 
@@ -1276,25 +1067,19 @@
             final_block.append_operation(helper.br(<span class="number">0</span>, <span class="kw-2">&amp;</span>[result], location));
             <span class="kw">return </span><span class="prelude-val">Ok</span>(());
         } <span class="kw">else </span>{
-            block
-                .append_operation(arith::extsi(
-                    entry.argument(<span class="number">0</span>)<span class="question-mark">?</span>.into(),
-                    IntegerType::new(context, dst_width.try_into()<span class="question-mark">?</span>).into(),
-                    location,
-                ))
-                .result(<span class="number">0</span>)<span class="question-mark">?
-                </span>.into()
-        }
-    } <span class="kw">else </span>{
-        block
-            .append_operation(arith::extui(
-                block.argument(<span class="number">0</span>)<span class="question-mark">?</span>.into(),
+            block.append_op_result(arith::extsi(
+                entry.argument(<span class="number">0</span>)<span class="question-mark">?</span>.into(),
                 IntegerType::new(context, dst_width.try_into()<span class="question-mark">?</span>).into(),
                 location,
-            ))
-            .result(<span class="number">0</span>)<span class="question-mark">?
-            </span>.into()
-    };
+            ))<span class="question-mark">?
+        </span>}
+    } <span class="kw">else </span>{
+        block.append_op_result(arith::extui(
+            block.argument(<span class="number">0</span>)<span class="question-mark">?</span>.into(),
+            IntegerType::new(context, dst_width.try_into()<span class="question-mark">?</span>).into(),
+            location,
+        ))<span class="question-mark">?
+    </span>};
 
     block.append_operation(helper.br(<span class="number">0</span>, <span class="kw-2">&amp;</span>[result], location));
     <span class="prelude-val">Ok</span>(())
@@ -1309,8 +1094,8 @@
     <span class="kw">use </span>cairo_lang_sierra::program::Program;
     <span class="kw">use </span>lazy_static::lazy_static;
 
-    <span class="macro">lazy_static! </span>{
-        <span class="kw">static </span><span class="kw-2">ref </span>DOWNCAST: (String, Program) = <span class="macro">load_cairo! </span>{
+    <span class="macro">lazy_static!</span> {
+        <span class="kw">static </span><span class="kw-2">ref </span>DOWNCAST: (String, Program) = <span class="macro">load_cairo!</span> {
             <span class="kw">use </span>core::integer::downcast;
 
             <span class="kw">fn </span>run_test(
@@ -1331,7 +1116,7 @@
                 )
             }
         };
-        <span class="kw">static </span><span class="kw-2">ref </span>UPCAST: (String, Program) = <span class="macro">load_cairo! </span>{
+        <span class="kw">static </span><span class="kw-2">ref </span>UPCAST: (String, Program) = <span class="macro">load_cairo!</span> {
             <span class="kw">use </span>core::integer::upcast;
 
             <span class="kw">fn </span>run_test(
@@ -1429,6 +1214,7 @@
                 ),
                 <span class="macro">jit_struct!</span>(
                     JitValue::Bytes31([
+                        u8::MAX,
                         <span class="number">0</span>,
                         <span class="number">0</span>,
                         <span class="number">0</span>,
@@ -1459,98 +1245,74 @@
                         <span class="number">0</span>,
                         <span class="number">0</span>,
                         <span class="number">0</span>,
-                        u8::MAX
                     ]),
                     JitValue::Bytes31([
-                        <span class="number">0</span>,
-                        <span class="number">0</span>,
-                        <span class="number">0</span>,
-                        <span class="number">0</span>,
-                        <span class="number">0</span>,
-                        <span class="number">0</span>,
-                        <span class="number">0</span>,
-                        <span class="number">0</span>,
-                        <span class="number">0</span>,
-                        <span class="number">0</span>,
-                        <span class="number">0</span>,
-                        <span class="number">0</span>,
-                        <span class="number">0</span>,
-                        <span class="number">0</span>,
-                        <span class="number">0</span>,
-                        <span class="number">0</span>,
-                        <span class="number">0</span>,
-                        <span class="number">0</span>,
-                        <span class="number">0</span>,
-                        <span class="number">0</span>,
-                        <span class="number">0</span>,
-                        <span class="number">0</span>,
-                        <span class="number">0</span>,
-                        <span class="number">0</span>,
-                        <span class="number">0</span>,
-                        <span class="number">0</span>,
-                        <span class="number">0</span>,
-                        <span class="number">0</span>,
-                        <span class="number">0</span>,
                         u8::MAX,
-                        u8::MAX
+                        u8::MAX,
+                        <span class="number">0</span>,
+                        <span class="number">0</span>,
+                        <span class="number">0</span>,
+                        <span class="number">0</span>,
+                        <span class="number">0</span>,
+                        <span class="number">0</span>,
+                        <span class="number">0</span>,
+                        <span class="number">0</span>,
+                        <span class="number">0</span>,
+                        <span class="number">0</span>,
+                        <span class="number">0</span>,
+                        <span class="number">0</span>,
+                        <span class="number">0</span>,
+                        <span class="number">0</span>,
+                        <span class="number">0</span>,
+                        <span class="number">0</span>,
+                        <span class="number">0</span>,
+                        <span class="number">0</span>,
+                        <span class="number">0</span>,
+                        <span class="number">0</span>,
+                        <span class="number">0</span>,
+                        <span class="number">0</span>,
+                        <span class="number">0</span>,
+                        <span class="number">0</span>,
+                        <span class="number">0</span>,
+                        <span class="number">0</span>,
+                        <span class="number">0</span>,
+                        <span class="number">0</span>,
+                        <span class="number">0</span>,
                     ]),
                     JitValue::Bytes31([
-                        <span class="number">0</span>,
-                        <span class="number">0</span>,
-                        <span class="number">0</span>,
-                        <span class="number">0</span>,
-                        <span class="number">0</span>,
-                        <span class="number">0</span>,
-                        <span class="number">0</span>,
-                        <span class="number">0</span>,
-                        <span class="number">0</span>,
-                        <span class="number">0</span>,
-                        <span class="number">0</span>,
-                        <span class="number">0</span>,
-                        <span class="number">0</span>,
-                        <span class="number">0</span>,
-                        <span class="number">0</span>,
-                        <span class="number">0</span>,
-                        <span class="number">0</span>,
-                        <span class="number">0</span>,
-                        <span class="number">0</span>,
-                        <span class="number">0</span>,
-                        <span class="number">0</span>,
-                        <span class="number">0</span>,
-                        <span class="number">0</span>,
-                        <span class="number">0</span>,
-                        <span class="number">0</span>,
-                        <span class="number">0</span>,
-                        <span class="number">0</span>,
                         u8::MAX,
                         u8::MAX,
                         u8::MAX,
-                        u8::MAX
+                        u8::MAX,
+                        <span class="number">0</span>,
+                        <span class="number">0</span>,
+                        <span class="number">0</span>,
+                        <span class="number">0</span>,
+                        <span class="number">0</span>,
+                        <span class="number">0</span>,
+                        <span class="number">0</span>,
+                        <span class="number">0</span>,
+                        <span class="number">0</span>,
+                        <span class="number">0</span>,
+                        <span class="number">0</span>,
+                        <span class="number">0</span>,
+                        <span class="number">0</span>,
+                        <span class="number">0</span>,
+                        <span class="number">0</span>,
+                        <span class="number">0</span>,
+                        <span class="number">0</span>,
+                        <span class="number">0</span>,
+                        <span class="number">0</span>,
+                        <span class="number">0</span>,
+                        <span class="number">0</span>,
+                        <span class="number">0</span>,
+                        <span class="number">0</span>,
+                        <span class="number">0</span>,
+                        <span class="number">0</span>,
+                        <span class="number">0</span>,
+                        <span class="number">0</span>,
                     ]),
                     JitValue::Bytes31([
-                        <span class="number">0</span>,
-                        <span class="number">0</span>,
-                        <span class="number">0</span>,
-                        <span class="number">0</span>,
-                        <span class="number">0</span>,
-                        <span class="number">0</span>,
-                        <span class="number">0</span>,
-                        <span class="number">0</span>,
-                        <span class="number">0</span>,
-                        <span class="number">0</span>,
-                        <span class="number">0</span>,
-                        <span class="number">0</span>,
-                        <span class="number">0</span>,
-                        <span class="number">0</span>,
-                        <span class="number">0</span>,
-                        <span class="number">0</span>,
-                        <span class="number">0</span>,
-                        <span class="number">0</span>,
-                        <span class="number">0</span>,
-                        <span class="number">0</span>,
-                        <span class="number">0</span>,
-                        <span class="number">0</span>,
-                        <span class="number">0</span>,
                         u8::MAX,
                         u8::MAX,
                         u8::MAX,
@@ -1558,24 +1320,32 @@
                         u8::MAX,
                         u8::MAX,
                         u8::MAX,
-                        u8::MAX
+                        u8::MAX,
+                        <span class="number">0</span>,
+                        <span class="number">0</span>,
+                        <span class="number">0</span>,
+                        <span class="number">0</span>,
+                        <span class="number">0</span>,
+                        <span class="number">0</span>,
+                        <span class="number">0</span>,
+                        <span class="number">0</span>,
+                        <span class="number">0</span>,
+                        <span class="number">0</span>,
+                        <span class="number">0</span>,
+                        <span class="number">0</span>,
+                        <span class="number">0</span>,
+                        <span class="number">0</span>,
+                        <span class="number">0</span>,
+                        <span class="number">0</span>,
+                        <span class="number">0</span>,
+                        <span class="number">0</span>,
+                        <span class="number">0</span>,
+                        <span class="number">0</span>,
+                        <span class="number">0</span>,
+                        <span class="number">0</span>,
+                        <span class="number">0</span>,
                     ]),
                     JitValue::Bytes31([
-                        <span class="number">0</span>,
-                        <span class="number">0</span>,
-                        <span class="number">0</span>,
-                        <span class="number">0</span>,
-                        <span class="number">0</span>,
-                        <span class="number">0</span>,
-                        <span class="number">0</span>,
-                        <span class="number">0</span>,
-                        <span class="number">0</span>,
-                        <span class="number">0</span>,
-                        <span class="number">0</span>,
-                        <span class="number">0</span>,
-                        <span class="number">0</span>,
-                        <span class="number">0</span>,
-                        <span class="number">0</span>,
                         u8::MAX,
                         u8::MAX,
                         u8::MAX,
@@ -1591,7 +1361,22 @@
                         u8::MAX,
                         u8::MAX,
                         u8::MAX,
-                        u8::MAX
+                        u8::MAX,
+                        <span class="number">0</span>,
+                        <span class="number">0</span>,
+                        <span class="number">0</span>,
+                        <span class="number">0</span>,
+                        <span class="number">0</span>,
+                        <span class="number">0</span>,
+                        <span class="number">0</span>,
+                        <span class="number">0</span>,
+                        <span class="number">0</span>,
+                        <span class="number">0</span>,
+                        <span class="number">0</span>,
+                        <span class="number">0</span>,
+                        <span class="number">0</span>,
+                        <span class="number">0</span>,
+                        <span class="number">0</span>,
                     ]),
                     JitValue::Bytes31([u8::MAX; <span class="number">31</span>]),
                 ),
