@@ -34,6 +34,10 @@ where
         self.cache.get(key).cloned()
     }
 
+    pub fn len(&self) -> usize {
+        self.cache.len()
+    }
+
     pub fn compile_and_insert(
         &mut self,
         key: K,
@@ -91,6 +95,7 @@ mod tests {
     fn test_aot_compile_and_insert() {
         let native_context = NativeContext::new();
         let mut cache = AotProgramCache::new(&native_context);
+        assert!(cache.len() == 0);
 
         let (_, program) = load_cairo! {
             fn run_test() -> felt252 {
@@ -100,6 +105,7 @@ mod tests {
 
         let function_id = &program.funcs.first().expect("should have a function").id;
         let executor = cache.compile_and_insert((), &program, OptLevel::default());
+        assert!(cache.len() == 1);
         let res = executor
             .invoke_dynamic(function_id, &[], Some(u128::MAX))
             .expect("should run");

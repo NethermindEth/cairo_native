@@ -30,3 +30,15 @@ where
         Self::Jit(value)
     }
 }
+
+impl<'a, K> ProgramCache<'a, K>
+where
+    K: PartialEq + Eq + Hash,
+{
+    pub fn len(&self) -> usize {
+        match &self {
+            ProgramCache::Aot(cache) => cache.len(),
+            ProgramCache::Jit(cache) => cache.len(),
+        }
+    }
+}
