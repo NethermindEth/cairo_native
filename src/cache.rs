@@ -35,6 +35,13 @@ impl<'a, K> ProgramCache<'a, K>
 where
     K: PartialEq + Eq + Hash,
 {
+    pub fn is_empty(&self) -> bool {
+        match &self {
+            ProgramCache::Aot(cache) => cache.is_empty(),
+            ProgramCache::Jit(cache) => cache.is_empty(),
+        }
+    }
+
     pub fn len(&self) -> usize {
         match &self {
             ProgramCache::Aot(cache) => cache.len(),

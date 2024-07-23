@@ -39,6 +39,10 @@ where
         self.cache.get(key).cloned()
     }
 
+    pub fn is_empty(&self) -> bool {
+        self.cache.is_empty()
+    }
+
     pub fn len(&self) -> usize {
         self.cache.len()
     }
@@ -91,11 +95,13 @@ mod test {
         let context = NativeContext::new();
         let mut cache: JitProgramCache<&'static str> = JitProgramCache::new(&context);
         assert!(cache.len() == 0);
+        assert!(cache.is_empty());
 
         let start = Instant::now();
         cache.compile_and_insert("program1", &program1, Default::default());
         let diff_1 = Instant::now().duration_since(start);
         assert!(cache.len() == 1);
+        assert!(!cache.is_empty());
 
         let start = Instant::now();
         cache.get(&"program1").expect("exists");
@@ -107,6 +113,7 @@ mod test {
         cache.compile_and_insert("program2", &program2, Default::default());
         let diff_1 = Instant::now().duration_since(start);
         assert!(cache.len() == 2);
+        assert!(!cache.is_empty());
 
         let start = Instant::now();
         cache.get(&"program2").expect("exists");
