@@ -4,7 +4,7 @@ use std::{
     collections::HashMap,
     fmt::{self, Debug},
     hash::Hash,
-    rc::Rc,
+    sync::Arc,
 };
 
 /// A Cache for programs with the same context.
@@ -16,7 +16,7 @@ where
     // Since we already hold a reference to the Context, it doesn't make sense to use thread-safe
     // reference counting. Using a Arc<RwLock<T>> here is useless because NativeExecutor is neither
     // Send nor Sync.
-    cache: HashMap<K, Rc<JitNativeExecutor<'a>>>,
+    cache: HashMap<K, Arc<JitNativeExecutor<'a>>>,
 }
 
 impl<'a, K> JitProgramCache<'a, K>
@@ -35,8 +35,16 @@ where
         self.context
     }
 
-    pub fn get(&self, key: &K) -> Option<Rc<JitNativeExecutor<'a>>> {
+    pub fn get(&self, key: &K) -> Option<Arc<JitNativeExecutor<'a>>> {
         self.cache.get(key).cloned()
+    }
+
+    pub fn is_empty(&self) -> bool {
+        self.cache.is_empty()
+    }
+
+    pub fn len(&self) -> usize {
+        self.cache.len()
     }
 
     pub fn compile_and_insert(
@@ -44,11 +52,11 @@ where
         key: K,
         program: &Program,
         opt_level: OptLevel,
-    ) -> Rc<JitNativeExecutor<'a>> {
+    ) -> Arc<JitNativeExecutor<'a>> {
         let module = self.context.compile(program, None).expect("should compile");
         let executor = JitNativeExecutor::from_native_module(module, opt_level);
 
-        let executor = Rc::new(executor);
+        let executor = Arc::new(executor);
         self.cache.insert(key, executor.clone());
 
         executor
@@ -65,6 +73,7 @@ where
 }
 
 #[cfg(test)]
+#[allow(clippy::len_zero)] // specifically testing both len and is_empty here
 mod test {
     use super::*;
     use crate::utils::test::load_cairo;
@@ -86,10 +95,14 @@ mod test {
 
         let context = NativeContext::new();
         let mut cache: JitProgramCache<&'static str> = JitProgramCache::new(&context);
+        assert!(cache.len() == 0);
+        assert!(cache.is_empty());
 
         let start = Instant::now();
         cache.compile_and_insert("program1", &program1, Default::default());
         let diff_1 = Instant::now().duration_since(start);
+        assert!(cache.len() == 1);
+        assert!(!cache.is_empty());
 
         let start = Instant::now();
         cache.get(&"program1").expect("exists");
@@ -100,6 +113,8 @@ mod test {
         let start = Instant::now();
         cache.compile_and_insert("program2", &program2, Default::default());
         let diff_1 = Instant::now().duration_since(start);
+        assert!(cache.len() == 2);
+        assert!(!cache.is_empty());
 
         let start = Instant::now();
         cache.get(&"program2").expect("exists");

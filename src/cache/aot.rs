@@ -8,7 +8,7 @@ use std::{
     collections::HashMap,
     fmt::{self, Debug},
     hash::Hash,
-    rc::Rc,
+    sync::Arc,
 };
 
 pub struct AotProgramCache<'a, K>
@@ -16,7 +16,7 @@ where
     K: PartialEq + Eq + Hash,
 {
     context: &'a NativeContext,
-    cache: HashMap<K, Rc<AotNativeExecutor>>,
+    cache: HashMap<K, Arc<AotNativeExecutor>>,
 }
 
 impl<'a, K> AotProgramCache<'a, K>
@@ -30,8 +30,16 @@ where
         }
     }
 
-    pub fn get(&self, key: &K) -> Option<Rc<AotNativeExecutor>> {
+    pub fn get(&self, key: &K) -> Option<Arc<AotNativeExecutor>> {
         self.cache.get(key).cloned()
+    }
+
+    pub fn is_empty(&self) -> bool {
+        self.cache.is_empty()
+    }
+
+    pub fn len(&self) -> usize {
+        self.cache.len()
     }
 
     pub fn compile_and_insert(
@@ -39,7 +47,7 @@ where
         key: K,
         program: &Program,
         opt_level: OptLevel,
-    ) -> Rc<AotNativeExecutor> {
+    ) -> Arc<AotNativeExecutor> {
         let NativeModule {
             module,
             registry,
@@ -65,7 +73,7 @@ where
             metadata.get::<GasMetadata>().cloned().unwrap(),
         );
 
-        let executor = Rc::new(executor);
+        let executor = Arc::new(executor);
         self.cache.insert(key, executor.clone());
 
         executor
@@ -82,6 +90,7 @@ where
 }
 
 #[cfg(test)]
+#[allow(clippy::len_zero)] // specifically testing both len and is_empty here
 mod tests {
     use super::*;
     use crate::{utils::test::load_cairo, values::JitValue};
@@ -91,6 +100,8 @@ mod tests {
     fn test_aot_compile_and_insert() {
         let native_context = NativeContext::new();
         let mut cache = AotProgramCache::new(&native_context);
+        assert!(cache.len() == 0);
+        assert!(cache.is_empty());
 
         let (_, program) = load_cairo! {
             fn run_test() -> felt252 {
@@ -100,6 +111,8 @@ mod tests {
 
         let function_id = &program.funcs.first().expect("should have a function").id;
         let executor = cache.compile_and_insert((), &program, OptLevel::default());
+        assert!(cache.len() == 1);
+        assert!(!cache.is_empty());
         let res = executor
             .invoke_dynamic(function_id, &[], Some(u128::MAX))
             .expect("should run");
