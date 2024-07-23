@@ -73,6 +73,7 @@ where
 }
 
 #[cfg(test)]
+#[allow(clippy::len_zero)] // specifically testing both len and is_empty here
 mod test {
     use super::*;
     use crate::utils::test::load_cairo;

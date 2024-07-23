@@ -90,6 +90,7 @@ where
 }
 
 #[cfg(test)]
+#[allow(clippy::len_zero)] // specifically testing both len and is_empty here
 mod tests {
     use super::*;
     use crate::{utils::test::load_cairo, values::JitValue};
