@@ -226,9 +226,7 @@ pub fn object_to_shared_lib(object: &[u8], output_filename: &Path) -> Result<()>
         if path.is_absolute() {
             extra_dir
         } else {
-            let mut absolute_path = env::current_dir()
-                .expect("Failed to get the current directory")
-                .join(path);
+            let mut absolute_path = Path::new(&env::var("CARGO_MANIFEST_DIR").unwrap()).join(path);
             absolute_path = absolute_path
                 .canonicalize()
                 .expect("Failed to cannonicalize path");
